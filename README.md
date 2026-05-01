@@ -1,0 +1,2 @@
+# visitshym.kz
+visitshym.kz
