@@ -1,0 +1,130 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+        <link rel="stylesheet" href="tur1.css">
+</head>
+<body>
+<div class="frame"></div>
+<div class="top-right">
+
+  <div class="lang">
+    <select onchange="setLang(this.value)">
+      <option value="kz">KZ</option>
+      <option value="ru">RU</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
+
+  <div class="burger" onclick="openMenu()">☰</div>
+</div>
+
+<!-- MENU -->
+<div class="menu" id="menu">
+
+  <div class="clock-box">
+    <div class="clock" id="clock">00:00:00</div>
+    <div class="date" id="date">loading...</div>
+  </div>
+
+  <div class="close-btn1" onclick="closeMenu()">
+  ✖️
+</div>
+
+  <div class="item">
+    <a class="link-btn" href="index.html" data-key="M1">Басты бет</a>
+  </div>
+
+  <div class="item">
+  <div class="title" data-key="M2" onclick="toggle(this.parentElement)">
+    Турлар жайлы <span class="arrow">▶️</span>
+  </div>
+
+  <div class="submenu">
+    <a href="tur1.html" data-key="M21">ҚАЗІРГІ ШЫМКЕНТ</a>
+    <a href="page3.html" data-key="M22">ҚАЛАНЫҢ ӘІО</a>
+    <a href="page3.html" data-key="M23">ТАНЫМДЫҚ ТУР</a>
+    <a href="page3.html" data-key="M24">ТАРИХИ ҚАЛА</a>
+    <a href="page3.html" data-key="M25">ҚАЖЫЛЫҚ ҚАЛАСЫ</a>
+    <a href="page3.html" data-key="M26">ЕСКЕ АЛУ ЖӘНЕ МӘДЕНИЕТ БАҒЫТЫ</a>
+  </div>
+</div>
+
+  <div class="item">
+    <a class="link-btn" href="#" data-key="M3">Біз туралы</a>
+  </div>
+
+  <div class="item">
+    <a class="link-btn" href="index.html#contact" data-key="M4">Байланыс</a>
+  </div>
+
+ <button class="weather-btn" onclick="openW()" data-key="Poroda">🌦️ Погода</button>
+ <div class="social-bar">
+	<a href="https://wa.me/77000000000" target="_blank" class="s wa">
+       <i class="fa-brands fa-whatsapp"></i></a>
+	<a href="https://instagram.com/visitshymkent" target="_blank" class="s ig">
+		<i class="fa-brands fa-instagram"></i></a>
+	<a href="https://facebook.com/visitshymkent" target="_blank" class="s fb">
+		<i class="fa-brands fa-facebook-f"></i></a>
+	<a href="https://youtube.com/@visitshymkent3910" target="_blank" class="s yt">
+		<i class="fa-brands fa-youtube"></i></a>
+	<a href="https://tiktok.com/@visitshymkent" target="_blank" class="s tt">
+		<i class="fa-brands fa-tiktok"></i></a>
+	<a href="tel:+77000000000" class="s call">
+		<i class="fa-solid fa-phone"></i></a>
+</div>
+
+</div>
+
+<!-- WEATHER -->
+<div class="backdrop" id="bg" onclick="closeW()"></div>
+
+<div class="sheet" id="sheet">
+
+  <div class="handle"></div>
+
+  <h3>📍 Шымкент</h3>
+
+  <div class="now" id="now">Жүктелуде...</div>
+
+  <div class="hours" id="hours"></div>
+
+</div>
+
+<!-- SLIDER -->
+<div class="slider">
+  <div class="slide active">
+    <img src="images/mesto2.jpg">
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size: 25px;" data-key="T3">Qyzgaldaq saraiy</h1>
+      <P class="info" data-key="mesto2">«Qyzgaldaq saraiy» — заманауи сәулет пен көпфункциялы форматты үйлестірген концерттік кешен. Ол халықаралық кездесулер, симпозиумдар, мәдени фестивальдер және ірі іс-шараларды өткізуге арналған. Үш қабатты ғимараттың жалпы аумағы 17 964 м², ал негізгі зал 2 066 адамға дейін қабылдай алады. Сонымен қатар 190 орындық конференц-зал бар. Кешен заманауи жарық, дыбыс және сахна жабдықтарымен толық қамтылған және халықаралық стандарттарға сай келеді. Интерьері кең, VIP-аймақтары мен ыңғайлы орындықтары көрермендерге жоғары жайлылық сыйлайды. Нысан атауы Шымкенттің символы — қызғалдаққа байланысты берілген.</P>
+
+      <div class="slide-audio">
+        <p class="audioText"></p>
+        <audio controls></audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70030076628523962/69.623442,42.394690" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C1">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <a href="Қазіргі Шымкент.html#Qyzgaldaqsaraiy" class="detailBtn" style="text-decoration: none;" data-key="Keri">Кері қайту</a>
+    </div>
+  </div>
+</div>
+<div class="route-btn" onclick="openRoute()" data-key="marshut">📍 Маршрут</div>
+
+<div class="map-modal" id="mapModal">
+  <div class="map-box">
+    <button class="close" onclick="closeMap()">✖</button>
+    <div id="map"></div>
+  </div>
+</div>
+<script src="tur.js"></script>
+<script>
+
+</script>
+</body>
+</html>

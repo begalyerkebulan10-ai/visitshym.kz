@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logo Scroll Fix</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+emailjs.init("rfWAzwnmg5nqBt-7y");
+</script>
+<link rel="stylesheet" href="style.css">
+<style>
+</style>
+</head>
+
+<body>
+<div class="hero">
+<!-- FULL SCREEN VIDEO -->
+<video class="bg" autoplay muted loop>
+  <source src="images/fon1.mp4" type="video/mp4">
+  </video>
+<!-- TEXT -->
+  <h1 data-key="T1">QR туристік маршуттар</h1>
+  <p data-key="T2">Шымкентке қош келдіңіз!</p>
+
+<!-- SOCIAL ICONS -->
+<div class="social">
+
+  <a href="https://instagram.com/visitshymkent" target="_blank" class="s ig">
+    <i class="fa-brands fa-instagram"></i>
+  </a>
+
+  <a href="https://facebook.com/visitshymkent" target="_blank" class="s fb">
+    <i class="fa-brands fa-facebook-f"></i>
+  </a>
+
+  <a href="https://youtube.com/@visitshymkent3910" target="_blank" class="s yt">
+    <i class="fa-brands fa-youtube"></i>
+  </a>
+    <a href="https://tiktok.com/@visitshymkent" target="_blank" class="s tt">
+    <i class="fa-brands fa-tiktok"></i>
+  </a>
+
+</div>
+  <div class="frame"></div>
+</div>
+<!-- HEADER -->
+<header id="header">
+  <div class="logo">
+    <img src="images/lego.png" alt="logo">
+  </div>
+
+<div class="top-right">
+
+  <div class="lang">
+  <select id="langSelect" onchange="changeLang(this.value)">
+  <option value="kz">KZ</option>
+  <option value="ru">RU</option>
+  <option value="en">EN</option>
+</select>
+  </div>
+
+  <div class="burger" onclick="openMenu()">☰</div>
+</div>
+</header>
+
+<!-- MENU -->
+<div class="menu" id="menu">
+
+  <div class="clock-box">
+    <div class="clock" id="clock">00:00:00</div>
+    <div class="date" id="date">loading...</div>
+  </div>
+
+  <div class="close-btn1" onclick="closeMenu()">
+  ✖️
+</div>
+
+  <div class="item">
+    <a class="link-btn" href="index.html" data-key="M1">Басты бет</a>
+  </div>
+
+ <div class="item">
+  <div class="title" data-key="M2" onclick="toggle(this.parentElement)">
+    Турлар жайлы <span class="arrow">▶️</span>
+  </div>
+
+  <div class="submenu">
+    <a href="Қазіргі Шымкент.html" data-key="M21">ҚАЗІРГІ ШЫМКЕНТ</a>
+    <a href="page3.html" data-key="M22">ҚАЛАНЫҢ ӘІО</a>
+    <a href="page3.html" data-key="M23">ТАНЫМДЫҚ ТУР</a>
+    <a href="page3.html" data-key="M24">ТАРИХИ ҚАЛА</a>
+    <a href="page3.html" data-key="M25">ҚАЖЫЛЫҚ ҚАЛАСЫ</a>
+    <a href="page3.html" data-key="M26">ЕСКЕ АЛУ ЖӘНЕ МӘДЕНИЕТ БАҒЫТЫ</a>
+  </div>
+</div>
+
+  <div class="item">
+    <a class="link-btn" href="#"  data-key="M3">Біз туралы</a>
+  </div>
+
+  <div class="item">
+    <a class="link-btn" href="#contact"  data-key="M4">Байланыс</a>
+  </div>
+
+ <button class="weather-btn" onclick="openW()" data-key="Poroda">🌦️ Погода</button>
+</div>
+
+<!-- WEATHER -->
+<div class="backdrop" id="bg" onclick="closeW()"></div>
+
+<div class="sheet" id="sheet">
+
+  <div class="handle"></div>
+
+  <h3>📍 Шымкент</h3>
+
+  <div class="now" id="now">Жүктелуде...</div>
+
+  <div class="hours" id="hours"></div>
+
+</div>
+
+<!-- CARD -->
+  <div class="iv-card">
+    <div class="iv-frame">
+
+      <div class="iv-image">
+        <img src="images/qr.jpg">
+      </div>
+
+      <div class="iv-text">
+        <h2 data-key="T3">Жоба жайлы</h2>
+        <p class="text" id="text">
+  <span data-key="T4">QR-кодтар негізінде әзірленген сандық маршруттар – заманауи туризмнің жаңа бағыты. Әрбір көрікті орынға орнатылған QR-кодтарды сканерлеу арқылы туристер сол нысан туралы толық ақпаратты (тарихы, сипаттамасы, фото және аудио) бірден ала алады</span>
+  <span id="dots">...</span>
+  <span id="more" data-key="T5">
+    QR маршруттар туристерге өз бетінше саяхаттауға жағдай жасап, әрбір нысанды тереңірек танып-білуге көмектеседі. Нәтижесінде, келушілерге көрсетілетін қызмет сапасы жақсарып, заманауи цифрлық қала бейнесі қалыптасады.
+  </span>
+  <span class="btn" onclick="toggleText()" id="btn" data-key="T6">➡️</span>
+</p>
+    </div>
+  </div>
+
+<div class="section-title">
+  <h2 data-key="T7">Турлар бөлімі</h2>
+</div>
+<div class="slider1">
+
+  <div class="btns1">
+    <button onclick="prev1()">‹</button>
+    <button onclick="next1()">›</button>
+  </div>
+
+  <div class="slide1 active">
+    <img src="images/tur1.jpeg">
+    <div class="text1"><h2 data-key="T8">ҚАЗІРГІ ШЫМКЕНТ</h2> <br> <p data-key="T9">№1 тур: Шымкент қаласының көрікті 12 нысанын аралайтын ерекше экскурсия. Қала мәдениеті мен заманауи өмірімен жақынырақ танысасыз.</p></div>
+  </div>
+
+  <div class="slide1">
+    <img src="images/tur2.jpg">
+    <div class="text1"><h2 data-key="T10">ҚАЛАНЫҢ ӘІО</h2> <br> <p data-key="T11">№2 тур: ӘІО — Шымкенттің әкімшілік, мәдени және рухани орталығы. Мұнда қаланың негізгі мемлекеттік, білім және мәдени нысандары орналасқан.</p></div>
+  </div>
+
+  <div class="slide1">
+    <img src="images/tur3.jpeg">
+    <div class="text1"><h2 data-key="T12">ТАНЫМДЫҚ ТУР</h2> <br> <p data-key="T13">№3 тур: Шымкенттің мәдени, ойын-сауық және демалыс орындарын қамтитын танымдық экскурсия. Қала өмірінің заманауи атмосферасын сезінуге мүмкіндік береді.</p></div>
+  </div>
+
+  <div class="slide1">
+    <img src="images/tur4.jpg">
+    <div class="text1"><h2 data-key="T14">ТАРИХИ ҚАЛА</h2> <br> <p data-key="T15">№4 тур:Бұл турда Шымкент қаласының ең танымал сауда орталықтары, саябақтары және ойын-сауық кешендері арқылы Шымкенттің бүгінгі келбетін көре аласыз.</p></div>
+  </div>
+
+  <div class="slide1">
+    <img src="images/tur5.JPG">
+    <div class="text1"><h2 data-key="T16">ҚАЖЫЛЫҚ ҚАЛАСЫ</h2> <br> <p data-key="T17">№5 тур:Бұл турда көне Сайрам қаласының тарихи және рухани орындарымен танысасыз. Қожа Салық, Қарашаш ана, Ибрагим ата сияқты киелі кесенелер арқылы өңірдің терең тарихы мен ислам мәдениетінің ізін көресіз.</p></div>
+  </div>
+
+  <div class="slide1">
+    <img src="images/tur6.jpg">
+    <div class="text1"><h2 data-key="T18">ЕСКЕ АЛУ ЖӘНЕ МӘДЕНИЕТ БАҒЫТЫ</h2> <br> <p data-key="T19">№6 тур:Бұл турда Шымкент қаласының тарихи мұражайлар және ескерткіштер арқылы ел тарихындағы маңызды оқиғалар мен ерлікке арналған орындарды көріп, терең танымдық әсер аласыз.</p></div>
+  </div>
+
+</div>
+
+<section class="contact-wrapper" id="contact">
+
+  <!-- LEFT: CONTACT -->
+  <div class="left-box">
+    <h2 data-key="T20">Бізді әлуметтік желіден бақылаңыз</h2>
+      <a href="https://wa.me/77000000000" class="card wa">
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp
+    </a>
+
+    <a href="https://facebook.com/visitshymkent" class="card fb">
+    <i class="fa-brands fa-facebook"></i>Facebook
+  </a>
+
+    <a href="https://instagram.com/visitshymkent" class="card ig">
+      <i class="fa-brands fa-instagram"></i> Instagram
+    </a>
+    <a href="https://youtube.com/@visitshymkent3910" class="card yt">
+    <i class="fa-brands fa-youtube"></i>Youtube
+    </a>
+    <a href="https://tiktok.com/@visitshymkent" class="card tt">
+    <i class="fa-brands fa-tiktok"></i>Tiktok
+    </a>
+
+  </div>
+
+  <!-- RIGHT -->
+   <div class="right">
+  <h2 data-key="T21">📩 Хабарлама жіберу</h2>
+
+  <input type="text" id="name" placeholder="Login">
+  <input type="email" id="email" placeholder="Email">
+  <textarea id="message" placeholder="message"></textarea>
+
+  <button onclick="sendEmail()" data-key="T22">Жіберу</button>
+</div>
+
+<script src="home.js"></script>
+</section>
+<script>
+let isChanging = false;
+let currentLang = "kz";
+
+function changeLang(lang) {
+  if (isChanging) return;
+  isChanging = true;
+
+  currentLang = lang;
+
+document.querySelectorAll("[data-key]").forEach(el => {
+  const key = el.dataset.key;
+  const text = texts?.[lang]?.[key];
+
+  if (!text) return;
+
+  // Егер ішінде arrow болса — тек текстті ауыстыр
+  if (el.querySelector(".arrow")) {
+    el.childNodes[0].nodeValue = text + " ";
+  } else {
+    el.textContent = text;
+  }
+});
+
+  localStorage.setItem("lang", lang);
+
+  setTimeout(() => isChanging = false, 50);
+}
+
+const texts = {
+  kz:{
+    M1:"Басты бет",
+    M2:"Турлар жайлы",
+    M21:"ҚАЗІРГІ ШЫМКЕНТ",
+    M22:"ҚАЛАНЫҢ ӘІО",
+    M23:"ТАНЫМДЫҚ ТУР",
+    M24:"ТАРИХИ ҚАЛА",
+    M25:"ҚАЖЫЛЫҚ ҚАЛАСЫ",
+    M26:"ЕСКЕ АЛУ ЖӘНЕ МӘДЕНИЕТ БАҒЫТЫ",
+    M3:"Біз туралы",
+    M4:"Байланыс",
+    Poroda:"🌦️ Ауа райы",
+    T1:"QR туристік маршуттар",
+    T2:"Шымкентке қош келдіңіз!",
+    T3:"Жоба жайлы",
+    T4:"QR-кодтар негізінде әзірленген сандық маршруттар – заманауи туризмнің жаңа бағыты. Әрбір көрікті орынға орнатылған QR-кодтарды сканерлеу арқылы туристер сол нысан туралы толық ақпаратты (тарихы, сипаттамасы, фото және аудио) бірден ала алады",
+    T5:"QR маршруттар туристерге өз бетінше саяхаттауға жағдай жасап, әрбір нысанды тереңірек танып-білуге көмектеседі. Нәтижесінде, келушілерге көрсетілетін қызмет сапасы жақсарып, заманауи цифрлық қала бейнесі қалыптасады.",
+    T6:"➡️",
+    T7:"Турлар бөлімі",
+    T8:"ҚАЗІРГІ ШЫМКЕНТ",
+    T9:"№1 тур: Шымкент қаласының көрікті 12 нысанын аралайтын ерекше экскурсия. Қала мәдениеті мен заманауи өмірімен жақынырақ танысасыз.",
+    T10:"ҚАЛАНЫҢ ӘІО",
+    T11:"№2 тур: ӘІО — Шымкенттің әкімшілік, мәдени және рухани орталығы. Мұнда қаланың негізгі мемлекеттік, білім және мәдени нысандары орналасқан.",
+    T12:"ТАНЫМДЫҚ ТУР",
+    T13:">№3 тур: Шымкенттің мәдени, ойын-сауық және демалыс орындарын қамтитын танымдық экскурсия. Қала өмірінің заманауи атмосферасын сезінуге мүмкіндік береді.",
+    T14:"ТАРИХИ ҚАЛА",
+    T15:"№4 тур:Бұл турда Шымкент қаласының ең танымал сауда орталықтары, саябақтары және ойын-сауық кешендері арқылы Шымкенттің бүгінгі келбетін көре аласыз.",
+    T16:"ҚАЖЫЛЫҚ ҚАЛАСЫ",
+    T17:"№5 тур:Бұл турда көне Сайрам қаласының тарихи және рухани орындарымен танысасыз. Қожа Салық, Қарашаш ана, Ибрагим ата сияқты киелі кесенелер арқылы өңірдің терең тарихы мен ислам мәдениетінің ізін көресіз.",
+    T18:"ЕСКЕ АЛУ ЖӘНЕ МӘДЕНИЕТ БАҒЫТЫ",
+    T19:"№6 тур:Бұл турда Шымкент қаласының тарихи мұражайлар және ескерткіштер арқылы ел тарихындағы маңызды оқиғалар мен ерлікке арналған орындарды көріп, терең танымдық әсер аласыз.",
+    T20:"Бізді әлуметтік желіден бақылаңыз",
+    T21:"📩 Хабарлама жіберу",
+    T22:"Жіберу",
+},
+  ru:{
+    M1:"Главная",
+    M2:"О турах",
+    M21:"СОВРЕМЕННЫЙ ШЫМКЕНТ",
+    M22:"ГОРОДСКОЙ АДО",
+    M23:"ПОЗНАВАТЕЛЬНЫЙ ТУР",
+    M24:"ИСТОРИЧЕСКИЙ ГОРОД",
+    M25:"СВЯЩЕННЫЙ ГОРОД",
+    M26:"ПАМЯТЬ И КУЛЬТУРА",
+    M3:"О нас",
+    M4:"Контакты",
+    Poroda:"🌦️Погода",
+    T1:"QR туристические маршруты",
+T2:"Добро пожаловать в Шымкент!",
+T3:"О проекте",
+T4:"Цифровые маршруты, разработанные на основе QR-кодов, — это новое направление современного туризма. Сканируя QR-коды, установленные на каждом достопримечательном месте, туристы сразу получают полную информацию об объекте (история, описание, фото и аудио).",
+T5:"QR-маршруты позволяют туристам самостоятельно путешествовать и глубже знакомиться с каждым объектом. В результате повышается качество обслуживания посетителей и формируется современный цифровой облик города.",
+T6:"➡️",
+T7:"Раздел туров",
+T8:"СОВРЕМЕННЫЙ ШЫМКЕНТ",
+T9:"Тур №1: уникальная экскурсия по 12 самым красивым достопримечательностям города Шымкент. Вы ближе познакомитесь с культурой города и современной жизнью.",
+T10:"АДМИНИСТРАТИВНЫЙ ЦЕНТР ГОРОДА",
+T11:"Тур №2: АЦ — административный, культурный и духовный центр Шымкента. Здесь расположены основные государственные, образовательные и культурные объекты города.",
+T12:"ПОЗНАВАТЕЛЬНЫЙ ТУР",
+T13:"Тур №3: познавательная экскурсия, включающая культурные, развлекательные и зоны отдыха Шымкента. Вы почувствуете современную атмосферу городской жизни.",
+T14:"ИСТОРИЧЕСКИЙ ГОРОД",
+T15:"Тур №4: в этом туре вы увидите современный облик Шымкента через его торговые центры, парки и развлекательные комплексы.",
+T16:"СВЯЩЕННЫЙ ГОРОД",
+T17:"Тур №5: в этом туре вы познакомитесь с историческими и духовными местами древнего города Сайрам. Через священные мавзолеи, такие как Қожа Салық, Қарашаш ана и Ибрагим ата, вы увидите глубокую историю региона и следы исламской культуры.",
+T18:"МАРШРУТ ПАМЯТИ И КУЛЬТУРЫ",
+T19:"Тур №6: в этом туре через исторические музеи и памятники Шымкента вы познакомитесь с важными событиями истории страны и местами, посвящёнными героизму, получив глубокое познавательное впечатление.",
+T20:"Следите за нами в социальных сетях",
+T21:"📩 Отправить сообщение",
+T22:"Отправить",
+    },
+  en:{
+    M1:"Home",
+    M2:"About tours",
+    M21:"MODERN SHYMKENT",
+    M22:"CITY ADMINISTRATIVE CENTER",
+    M23:"EDUCATIONAL TOUR",
+    M24:"HISTORICAL CITY",
+    M25:"SACRED CITY",
+    M26:"MEMORY & CULTURE",
+    M3:"About us",
+    M4:"Contact",
+    Poroda:"🌦️ Weather",
+    T1:"QR Tourist Routes",
+T2:"Welcome to Shymkent!",
+T3:"About the Project",
+T4:"Digital routes based on QR codes are a new direction in modern tourism. By scanning QR codes installed at each landmark, tourists can instantly access complete information about the site (history, description, photos, and audio).",
+T5:"QR routes allow tourists to travel independently and explore each site in greater depth. As a result, the quality of visitor services improves and a modern digital image of the city is formed.",
+T6:"➡️",
+T7:"Tour Section",
+T8:"MODERN SHYMKENT",
+T9:"Tour #1: a unique excursion covering 12 of the most beautiful landmarks in Shymkent. You will get closer to the city's culture and modern lifestyle.",
+T10:"CITY ADMINISTRATIVE CENTER",
+T11:"Tour #2: the administrative, cultural, and spiritual center of Shymkent. It includes the city's main government, educational, and cultural facilities.",
+T12:"EDUCATIONAL TOUR",
+T13:"Tour #3: an educational excursion covering cultural, entertainment, and recreation areas of Shymkent. You will experience the modern atmosphere of city life.",
+T14:"HISTORICAL CITY",
+T15:"Tour #4: in this tour, you will see the modern face of Shymkent through its shopping centers, parks, and entertainment complexes.",
+T16:"SACRED CITY",
+T17:"Tour #5: in this tour, you will explore the historical and spiritual places of the ancient city of Sairam. Through sacred mausoleums such as Khoja Salyq, Karashash Ana, and Ibrahim Ata, you will discover the deep history of the region and traces of Islamic culture.",
+T18:"MEMORY AND CULTURE ROUTE",
+T19:"Tour #6: in this tour, through historical museums and monuments of Shymkent, you will learn about important events in the country's history and heroic places, gaining a deep educational experience.",
+T20:"Follow us on social media",
+T21:"📩 Send Message",
+T22:"Send",
+  }
+};
+</script>
+
+</body>
+</html>

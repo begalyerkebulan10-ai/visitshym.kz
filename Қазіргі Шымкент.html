@@ -1,0 +1,404 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+        <link rel="stylesheet" href="tur1.css">
+</head>
+<body>
+<div class="frame"></div>
+<div class="top-right">
+
+  <div class="lang">
+    <select onchange="setLang(this.value)">
+      <option value="kz">KZ</option>
+      <option value="ru">RU</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
+
+  <div class="burger" onclick="openMenu()">☰</div>
+</div>
+
+<!-- MENU -->
+<div class="menu" id="menu">
+
+  <div class="clock-box">
+    <div class="clock" id="clock">00:00:00</div>
+    <div class="date" id="date">loading...</div>
+  </div>
+
+  <div class="close-btn1" onclick="closeMenu()">
+  ✖️
+</div>
+
+  <div class="item">
+    <a class="link-btn" href="index.html" data-key="M1">Басты бет</a>
+  </div>
+
+  <div class="item">
+  <div class="title" data-key="M2" onclick="toggle(this.parentElement)">
+    Турлар жайлы <span class="arrow">▶️</span>
+  </div>
+
+  <div class="submenu">
+    <a href="tur1.html" data-key="M21">ҚАЗІРГІ ШЫМКЕНТ</a>
+    <a href="page3.html" data-key="M22">ҚАЛАНЫҢ ӘІО</a>
+    <a href="page3.html" data-key="M23">ТАНЫМДЫҚ ТУР</a>
+    <a href="page3.html" data-key="M24">ТАРИХИ ҚАЛА</a>
+    <a href="page3.html" data-key="M25">ҚАЖЫЛЫҚ ҚАЛАСЫ</a>
+    <a href="page3.html" data-key="M26">ЕСКЕ АЛУ ЖӘНЕ МӘДЕНИЕТ БАҒЫТЫ</a>
+  </div>
+</div>
+
+  <div class="item">
+    <a class="link-btn" href="#" data-key="M3">Біз туралы</a>
+  </div>
+
+  <div class="item">
+    <a class="link-btn" href="index.html#contact" data-key="M4">Байланыс</a>
+  </div>
+
+ <button class="weather-btn" onclick="openW()" data-key="Poroda">🌦️ Погода</button>
+ <div class="social-bar">
+	<a href="https://wa.me/77000000000" target="_blank" class="s wa">
+       <i class="fa-brands fa-whatsapp"></i></a>
+	<a href="https://instagram.com/visitshymkent" target="_blank" class="s ig">
+		<i class="fa-brands fa-instagram"></i></a>
+	<a href="https://facebook.com/visitshymkent" target="_blank" class="s fb">
+		<i class="fa-brands fa-facebook-f"></i></a>
+	<a href="https://youtube.com/@visitshymkent3910" target="_blank" class="s yt">
+		<i class="fa-brands fa-youtube"></i></a>
+	<a href="https://tiktok.com/@visitshymkent" target="_blank" class="s tt">
+		<i class="fa-brands fa-tiktok"></i></a>
+	<a href="tel:+77000000000" class="s call">
+		<i class="fa-solid fa-phone"></i></a>
+</div>
+
+</div>
+
+<!-- WEATHER -->
+<div class="backdrop" id="bg" onclick="closeW()"></div>
+
+<div class="sheet" id="sheet">
+
+  <div class="handle"></div>
+
+  <h3>📍 Шымкент</h3>
+
+  <div class="now" id="now">Жүктелуде...</div>
+
+  <div class="hours" id="hours"></div>
+
+</div>
+
+<!-- SLIDER -->
+<div class="slider">
+    <div class="slide active">
+    <img src="images/mesto.jpeg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size: 50px;" data-key="T0">ҚАЗІРГІ ШЫМКЕНТ</h1>
+
+
+    </div>
+  </div>
+
+  <div class="slide" id="SHYMCITY">
+    <img src="images/mesto1.jpg">
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size: 25px;" data-key="T1">«SHYM CITY» саябағы </h1>
+      <P class="info" data-key="T2">Шымкент қаласындағы 45 гектардан асатын ірі демалыс және көрікті орын. Ол қала тұрғындары мен қонақтарына серуендеуге, спортпен айналысуға және отбасымен демалуға арналған.</P>
+
+      <div class="slide-audio">
+        <p class="audioText"></p>
+        <audio controls></audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70000001091443843/69.623877,42.397876" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C1">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('SHYM CITY.html')" data-key="Toligral1">Толығырақ</button>
+    </div>
+  </div>
+
+  <div class="slide" id="Qyzgaldaqsaraiy">
+    <img src="images/mesto2.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center" >
+      <h1 style="font-size:25px;" data-key="T3">Qyzgaldaq saraiy</h1>
+      <p class="info" data-key="T4">«Qyzgaldaq saraiy» — Шымкент қаласындағы заманауи көпфункциялы концерттік кешен. Ол халықаралық кездесулер, фестивальдер, симпозиумдар және ірі мәдени іс-шараларды өткізуге арналған. </p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70030076628523962/69.623442,42.394690" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C2">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('Qyzgaldaq saraiy.html')"data-key="Toligral2">Толығырақ</button>
+    </div>
+  </div>
+
+  <div class="slide"  id="Бәйдібекби">
+    <img src="images/mecto3.png">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T5">«Бәйдібек би» ескерткіші</h1>
+      <p class="info" data-key="T6">«Бәйдібек би» ескерткіші — Шымкент қаласындағы ең биік әрі маңызды тарихи нысандардың бірі. Ол қаланың солтүстік бөлігіндегі 220 метр биіктіктегі төбеге орнатылған. </p>
+
+      <div class="slide-audio">
+        <audio  controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70000001090748640/69.627769,42.387501" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C3">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('Бәйдібек би.html')"data-key="Toligral3">Толығырақ</button>
+    </div>
+  </div>
+
+    <div class="slide" id="Қазына">
+    <img src="images/mesto4.jpeg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;"data-key="T7">«Қазына» этно-тарихи кешені</h1>
+      <p class="info"data-key="T8">Шымкент қаласындағы ірі мәдени-танымдық орын, 2012 жылы ашылып, 75 гектар аумақты қамтиды. Ол жасыл желекке оранған кең аймақта орналасып, тарих пен заманауи демалысты біріктіреді.</p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70000001090748640/69.626479,42.384836" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C4">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('Қазына.html')"data-key="Toligral4">Толығырақ</button>
+    </div>
+  </div>
+
+   <div class="slide" id="Қазақ хандығының 550 жылдығы монументі">
+    <img src="images/mesto5.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T9">Қазақ хандығының 550 жылдығы монументі</h1>
+      <p class="info" data-key="T10">Қазақ хандығының 550 жылдығы монументі-2015 жылдың қазан айында "Қазына"этно-тарихи кешенін құру шеңберінде ашылған 15 метрлік ескерткіш. Ол тарихи сабақтастықты бейнелейтін ұлттық ою-өрнектері мен рельефтері бар екі аркадан тұрады.</p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70000001090748640/69.627966,42.384890" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C5">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('Қазақ хандығының 550 жылдығы монументі.html')"data-key="Toligral5">Толығырақ</button>
+    </div>
+  </div>
+
+   <div class="slide" id="тарихи-өлкетану мұражайы">
+    <img src="images/mesto6.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T11">Шымкенттің тарихи-өлкетану мұражайы</h1>
+      <p class="info" data-key="T12">Шымкенттің тарихи-өлкетану мұражайы 1920 жылы негізі қаланған және қаланың маңызды мәдени орталықтарының бірі болып табылады. 100 жылға жуық тарихы бар бұл мұражайдың басты мақсаты — келушілерді өңірдің табиғаты, тарихы мен мәдениетімен таныстыру. </p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70000001090748640/69.626951,42.382783" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C6">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('Тарихи-өлкетану мұражайы.html')"data-key="Toligral6">Толығырақ</button>
+    </div>
+  </div>
+   <div class="slide" id="Әдет-ғұрып және салт-дәстүр">
+    <img src="images/mesto7.jpeg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;"data-key="T13">Әдет-ғұрып және салт-дәстүр орталығы</h1>
+      <p class="info" data-key="T14">Әдет-ғұрып және салт-дәстүр орталығы 2014 жылдың желтоқсан айында Республикамыз бойынша тұңғыш рет шырайлы Шымқаламызда ашылды. Бұл еліміздің өзге өңірлері мен облыстарында жоқ бірегей орталық. </p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70000001090748640/69.628025,42.382827" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C7">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('Әдет-ғұрып және салт-дәстүр.html')" data-key="Toligral7">Толығырақ</button>
+    </div>
+  </div>
+
+     <div class="slide" id="Наурызалаңы">
+    <img src="images/mesto8.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T15">Наурыз алаңы</h1>
+      <p class="info" data-key="T16">Шымкентте қаланың шырайына шырай қосқан көрікті мекендердің қатары уақыт өткен сайын көбейіп келеді. Сондай сәулетті орындардың бірі – «Наурыз» алаңы. «Наурыз» алаңы 1 гектардан астам аумақты қамтиды.</p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70030076136120878/69.628590,42.382319" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C8">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('Наурыз алаңы.html')" data-key="Toligral8">Толығырақ</button>
+    </div>
+  </div>
+
+     <div class="slide" id="Жайлаукөл">
+    <img src="images/mesto9.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T17">Жайлау көл</h1>
+      <p class="info" data-key="T18">«Жайлау көл» демалыс аймағында орналасқан «Shymkent Altyn Eye» — биіктігі 50 метр болатын алып айналмалы аттракцион. Ол 18 жабық кабинамен жабдықталып, бір мезетте 108 адамды қабылдай алады.</p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70000001074739175/69.628203,42.381693" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C9">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('Жайлау көл.html')" data-key="Toligral9">Толығырақ</button>
+    </div>
+  </div>
+
+     <div class="slide" id="хайуанаттарбағы">
+    <img src="images/mesto10.png">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T19">Шымкент хайуанаттар бағы</h1>
+      <p class="info" data-key="T20">Шымкент хайуанаттар бағы — табиғатты жақыннан танып, сирек және экзотикалық жануарларды көруге мүмкіндік беретін ерекше орын. Ол тек демалыс аймағы емес, сонымен қатар экологиялық және білім беру орталығы. </p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70000001027111407/69.628102,42.376953" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C10">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('хайуанаттар бағы.html')" data-key="Toligral10">Толығырақ</button>
+    </div>
+  </div>
+
+     <div class="slide" id="дендрологиялықсаябақ">
+    <img src="images/mesto11.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T21">Асанбай Асқаров атындағы дендрологиялық саябақ</h1>
+      <p class="info" data-key="T22">Асанбай Асқаров атындағы дендрологиялық саябақ — Шымкенттің ең ірі әрі бірегей жасыл аймақтарының бірі. 1979 жылы бұрынғы қоқыс орнының орнына салынған бұл саябақ бүгінде 120 гектар аумақты алып жатыр.</p>
+
+      <div class="slide-audio">
+        <audio  controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70000001032997502/69.622985,42.368648" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C11">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('дендрологиялық саябақ.html')" data-key="Toligral11">Толығырақ</button>
+    </div>
+  </div>
+
+     <div class="slide" id="Қасірет">
+    <img src="images/mesto12.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T23">«Қасірет» мемориалды кешені </h1>
+      <p class="info" data-key="T24">«Қасірет» мемориалды кешені — саяси қуғын-сүргін құрбандарына арналған тарихи орын. Ол 1937–1938 жылдары көптеген адамдар атылған Албастысай аумағында орналасқан.</p>
+
+      <div class="slide-audio">
+        <audio  controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.ru/geo/69.623459,42.366951" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C12">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('Қасірет.html')" data-key="Toligral12">Толығырақ</button>
+    </div>
+  </div>
+
+  <div class="nav prev" onclick="prevSlide()">❮</div>
+  <div class="nav next" onclick="nextSlide()">❯</div>	
+</div>
+<div class="route-btn" onclick="openRoute()" data-key="marshut">📍 Маршрут</div>
+
+<div class="map-modal" id="mapModal">
+  <div class="map-box">
+    <button class="close" onclick="closeMap()">✖</button>
+    <div id="map"></div>
+  </div>
+</div>
+<script src="tur.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const slides = document.querySelectorAll(".slide");
+  let currentIndex = 0;
+
+  function updateSlides(save = true) {
+    slides.forEach(s => s.classList.remove("active"));
+    slides[currentIndex].classList.add("active");
+
+    if (save) {
+      sessionStorage.setItem("sliderIndex", currentIndex);
+    }
+  }
+
+  function nextSlide() {
+    if (currentIndex < slides.length - 1) {
+      currentIndex++;
+      updateSlides();
+    }
+  }
+
+  function prevSlide() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateSlides();
+    }
+  }
+
+  // expose global (HTML buttons үшін)
+  window.nextSlide = nextSlide;
+  window.prevSlide = prevSlide;
+
+  // 🔥 INIT
+  const saved = sessionStorage.getItem("sliderIndex");
+
+  if (saved !== null && !isNaN(saved)) {
+    currentIndex = parseInt(saved);
+  }
+
+  updateSlides(false);
+});
+</script>
+</body>
+</html>

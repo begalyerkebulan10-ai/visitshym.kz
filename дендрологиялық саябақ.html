@@ -1,0 +1,133 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+        <link rel="stylesheet" href="tur1.css">
+</head>
+<body>
+<div class="frame"></div>
+<div class="top-right">
+
+  <div class="lang">
+    <select onchange="setLang(this.value)">
+      <option value="kz">KZ</option>
+      <option value="ru">RU</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
+
+  <div class="burger" onclick="openMenu()">☰</div>
+</div>
+
+<!-- MENU -->
+<div class="menu" id="menu">
+
+  <div class="clock-box">
+    <div class="clock" id="clock">00:00:00</div>
+    <div class="date" id="date">loading...</div>
+  </div>
+
+  <div class="close-btn1" onclick="closeMenu()">
+  ✖️
+</div>
+
+  <div class="item">
+    <a class="link-btn" href="index.html" data-key="M1">Басты бет</a>
+  </div>
+
+  <div class="item">
+  <div class="title" data-key="M2" onclick="toggle(this.parentElement)">
+    Турлар жайлы <span class="arrow">▶️</span>
+  </div>
+
+  <div class="submenu">
+    <a href="tur1.html" data-key="M21">ҚАЗІРГІ ШЫМКЕНТ</a>
+    <a href="page3.html" data-key="M22">ҚАЛАНЫҢ ӘІО</a>
+    <a href="page3.html" data-key="M23">ТАНЫМДЫҚ ТУР</a>
+    <a href="page3.html" data-key="M24">ТАРИХИ ҚАЛА</a>
+    <a href="page3.html" data-key="M25">ҚАЖЫЛЫҚ ҚАЛАСЫ</a>
+    <a href="page3.html" data-key="M26">ЕСКЕ АЛУ ЖӘНЕ МӘДЕНИЕТ БАҒЫТЫ</a>
+  </div>
+</div>
+
+  <div class="item">
+    <a class="link-btn" href="#" data-key="M3">Біз туралы</a>
+  </div>
+
+  <div class="item">
+    <a class="link-btn" href="index.html#contact" data-key="M4">Байланыс</a>
+  </div>
+
+ <button class="weather-btn" onclick="openW()" data-key="Poroda">🌦️ Погода</button>
+ <div class="social-bar">
+	<a href="https://wa.me/77000000000" target="_blank" class="s wa">
+       <i class="fa-brands fa-whatsapp"></i></a>
+	<a href="https://instagram.com/visitshymkent" target="_blank" class="s ig">
+		<i class="fa-brands fa-instagram"></i></a>
+	<a href="https://facebook.com/visitshymkent" target="_blank" class="s fb">
+		<i class="fa-brands fa-facebook-f"></i></a>
+	<a href="https://youtube.com/@visitshymkent3910" target="_blank" class="s yt">
+		<i class="fa-brands fa-youtube"></i></a>
+	<a href="https://tiktok.com/@visitshymkent" target="_blank" class="s tt">
+		<i class="fa-brands fa-tiktok"></i></a>
+	<a href="tel:+77000000000" class="s call">
+		<i class="fa-solid fa-phone"></i></a>
+</div>
+
+</div>
+
+<!-- WEATHER -->
+<div class="backdrop" id="bg" onclick="closeW()"></div>
+
+<div class="sheet" id="sheet">
+
+  <div class="handle"></div>
+
+  <h3>📍 Шымкент</h3>
+
+  <div class="now" id="now">Жүктелуде...</div>
+
+  <div class="hours" id="hours"></div>
+
+</div>
+
+<!-- SLIDER -->
+<div class="slider">
+  <div class="slide active">
+    <img src="images/mesto11.jpg">
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size: 25px;" data-key="T21">Асанбай Асқаров атындағы дендрологиялық саябақ</h1>
+      <P class="info" data-key="mesto11">Асанбай Асқаров атындағы дендрологиялық саябақ — Шымкент қаласындағы ең ірі және ерекше саябақтардың бірі. Ол 1979 жылы бұрынғы қоқыс орнының орнында салынған және 120 гектар аумақты алып жатыр.
+Саябақта шамамен 80 мың ағаш және 1360-тан астам бұта түрі өседі. Мұнда Қазақстанда алғаш рет Солтүстік Америкадан әкелінген қызғалдақтар өсірілген.
+Ерекше орындарының бірі — «Атақты тұлғалар аллеясы», онда белгілі тарихи тұлғалар ағаш отырғызған. 2016 жылы саябаққа Асанбай Асқаровтың есімі берілді.
+Бүгінде бұл — демалуға, серуендеуге және спортпен айналысуға арналған танымал орын.</P>
+
+      <div class="slide-audio">
+        <p class="audioText"></p>
+        <audio controls></audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/shymkent/geo/70000001032997502/69.622985,42.368648" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C1">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <a href="Қазіргі Шымкент.html#дендрологиялықсаябақ" class="detailBtn" style="text-decoration: none;" data-key="Keri">Кері қайту</a>
+    </div>
+  </div>
+</div>
+<div class="route-btn" onclick="openRoute()" data-key="marshut">📍 Маршрут</div>
+
+<div class="map-modal" id="mapModal">
+  <div class="map-box">
+    <button class="close" onclick="closeMap()">✖</button>
+    <div id="map"></div>
+  </div>
+</div>
+<script src="tur.js"></script>
+<script>
+
+</script>
+</body>
+</html>
