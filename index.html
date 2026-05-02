@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logo Scroll Fix</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+emailjs.init("rfWAzwnmg5nqBt-7y");
+</script>
+<link rel="stylesheet" href="style.css">
+<style>
+</style>
+</head>
+
+<body>
+<div class="hero">
+<!-- FULL SCREEN VIDEO -->
+<video class="bg" autoplay muted loop>
+  <source src="images/fon1.mp4" type="video/mp4">
+  </video>
+<!-- TEXT -->
+  <h1>QR туристік маршуттар</h1>
+  <p>Шымкентке қош келдіңіз!</p>
+
+<!-- SOCIAL ICONS -->
+<div class="social">
+
+  <a href="https://instagram.com/visitshymkent" target="_blank" class="s ig">
+    <i class="fa-brands fa-instagram"></i>
+  </a>
+
+  <a href="https://facebook.com/visitshymkent" target="_blank" class="s fb">
+    <i class="fa-brands fa-facebook-f"></i>
+  </a>
+
+  <a href="https://youtube.com/@visitshymkent3910" target="_blank" class="s yt">
+    <i class="fa-brands fa-youtube"></i>
+  </a>
+    <a href="https://tiktok.com/@visitshymkent" target="_blank" class="s tt">
+    <i class="fa-brands fa-tiktok"></i>
+  </a>
+
+</div>
+  <div class="frame"></div>
+</div>
+<!-- HEADER -->
+<header id="header">
+  <div class="logo">
+    <img src="images/lego.png" alt="logo">
+  </div>
+
+  <div class="top-right">
+    <div class="lang">
+      <select>
+        <option>KZ</option>
+        <option>RU</option>
+        <option>EN</option>
+      </select>
+    </div>
+
+    <div class="burger" onclick="openMenu()">☰</div>
+  </div>
+</header>
+
+<!-- MENU -->
+<div class="menu" id="menu">
+
+  <div class="clock-box">
+    <div class="clock" id="clock">00:00:00</div>
+    <div class="date" id="date">loading...</div>
+  </div>
+
+  <div class="close-btn1" onclick="closeMenu()">
+  ✖️
+</div>
+
+  <div class="item">
+    <a class="link-btn" href="#">Басты бет</a>
+  </div>
+
+  <div class="item">
+  <div class="title" data-key="" onclick="toggle(this.parentElement)">
+    Турлар жайлы <span class="arrow">▶️</span>
+  </div>
+
+  <div class="submenu">
+    <a href="tur1.html" data-key="M21">№1 Тур</a>
+    <a href="page3.html" data-key="M22">№2 Тур</a>
+    <a href="page3.html" data-key="M23">№3 Тур</a>
+    <a href="page3.html" data-key="M24">№4 Тур</a>
+    <a href="page3.html" data-key="M25">№5 Тур</a>
+    <a href="page3.html" data-key="M26">№6 Тур</a>
+  </div>
+</div>
+
+  <div class="item">
+    <a class="link-btn" href="#">Біз туралы</a>
+  </div>
+
+  <div class="item">
+    <a class="link-btn" href="#">Байланыс</a>
+  </div>
+
+ <button class="weather-btn" onclick="openW()">🌦️ Погода</button>
+</div>
+
+<!-- WEATHER -->
+<div class="backdrop" id="bg" onclick="closeW()"></div>
+
+<div class="sheet" id="sheet">
+
+  <div class="handle"></div>
+
+  <h3>📍 Шымкент</h3>
+
+  <div class="now" id="now">Жүктелуде...</div>
+
+  <div class="hours" id="hours"></div>
+
+</div>
+
+<!-- CARD -->
+  <div class="iv-card">
+    <div class="iv-frame">
+
+      <div class="iv-image">
+        <img src="images/qr.jpg">
+      </div>
+
+      <div class="iv-text">
+        <h2>Жоба жайлы</h2>
+        <p class="text" id="text">
+  QR-кодтар негізінде әзірленген сандық маршруттар – заманауи туризмнің жаңа бағыты. Әрбір көрікті орынға орнатылған QR-кодтарды сканерлеу арқылы туристер сол нысан туралы толық ақпаратты (тарихы, сипаттамасы, фото және аудио) бірден ала алады
+  <span id="dots">...</span>
+  <span id="more">
+    QR маршруттар туристерге өз бетінше саяхаттауға жағдай жасап, әрбір нысанды тереңірек танып-білуге көмектеседі. Нәтижесінде, келушілерге көрсетілетін қызмет сапасы жақсарып, заманауи цифрлық қала бейнесі қалыптасады.
+  </span>
+  <span class="btn" onclick="toggleText()" id="btn">ДАЛЬШЕ</span>
+</p>
+    </div>
+  </div>
+
+<div class="section-title">
+  <h2>Турлар бөлімі</h2>
+</div>
+<div class="slider1">
+
+  <div class="btns1">
+    <button onclick="prev1()">‹</button>
+    <button onclick="next1()">›</button>
+  </div>
+
+  <div class="slide1 active">
+    <img src="images/tur1.jpeg">
+    <div class="text1"><h2>ҚАЗІРГІ ШЫМКЕНТ</h2> <br>№1 тур: Шымкент қаласының көрікті 12 нысанын аралайтын ерекше экскурсия. Қала мәдениеті мен заманауи өмірімен жақынырақ танысасыз.</div>
+  </div>
+
+  <div class="slide1">
+    <img src="images/tur2.jpg">
+    <div class="text1"><h2>ҚАЛАНЫҢ ӘІО</h2> <br>№2 тур: ӘІО — Шымкенттің әкімшілік, мәдени және рухани орталығы. Мұнда қаланың негізгі мемлекеттік, білім және мәдени нысандары орналасқан.</div>
+  </div>
+
+  <div class="slide1">
+    <img src="images/tur3.jpeg">
+    <div class="text1"><h2>ТАНЫМДЫҚ ТУР</h2> <br>№3 тур: Шымкенттің мәдени, ойын-сауық және демалыс орындарын қамтитын танымдық экскурсия. Қала өмірінің заманауи атмосферасын сезінуге мүмкіндік береді.</div>
+  </div>
+
+  <div class="slide1">
+    <img src="images/tur4.jpg">
+    <div class="text1"><h2>ТАРИХИ ҚАЛА</h2> <br>№4 тур:Бұл турда Шымкент қаласының ең танымал сауда орталықтары, саябақтары және ойын-сауық кешендері арқылы Шымкенттің бүгінгі келбетін көре аласыз.</div>
+  </div>
+
+  <div class="slide1">
+    <img src="images/tur5.JPG">
+    <div class="text1"><h2>ҚАЖЫЛЫҚ ҚАЛАСЫ</h2> <br>№5 тур:Бұл турда көне Сайрам қаласының тарихи және рухани орындарымен танысасыз. Қожа Салық, Қарашаш ана, Ибрагим ата сияқты киелі кесенелер арқылы өңірдің терең тарихы мен ислам мәдениетінің ізін көресіз.</div>
+  </div>
+
+  <div class="slide1">
+    <img src="images/tur6.jpg">
+    <div class="text1"><h2>ЕСКЕ АЛУ ЖӘНЕ МӘДЕНИЕТ БАҒЫТЫ</h2> <br>№6 тур:Бұл турда Шымкент қаласының тарихи мұражайлар және ескерткіштер арқылы ел тарихындағы маңызды оқиғалар мен ерлікке арналған орындарды көріп, терең танымдық әсер аласыз.</div>
+  </div>
+
+</div>
+
+<section class="contact-wrapper">
+
+  <!-- LEFT: CONTACT -->
+  <div class="left-box">
+    <h2>Бізді әлуметтік желіден бақылаңыз</h2>
+      <a href="https://wa.me/77000000000" class="card wa">
+      <i class="fa-brands fa-whatsapp"></i> WhatsApp
+    </a>
+
+    <a href="https://facebook.com/visitshymkent" class="card fb">
+    <i class="fa-brands fa-facebook"></i>Facebook
+  </a>
+
+    <a href="https://instagram.com/visitshymkent" class="card ig">
+      <i class="fa-brands fa-instagram"></i> Instagram
+    </a>
+    <a href="https://youtube.com/@visitshymkent3910" class="card yt">
+    <i class="fa-brands fa-youtube"></i>Youtube
+    </a>
+    <a href="https://tiktok.com/@visitshymkent" class="card tt">
+    <i class="fa-brands fa-tiktok"></i>Tiktok
+    </a>
+
+  </div>
+
+  <!-- RIGHT -->
+   <div class="right">
+  <h2>📩 Хабарлама жіберу</h2>
+
+  <input type="text" id="name" placeholder="Атыңыз">
+  <input type="email" id="email" placeholder="Email">
+  <textarea id="message" placeholder="Хабарлама"></textarea>
+
+  <button onclick="sendEmail()">Жіберу</button>
+</div>
+
+<script src="home.js"></script>
+</section>
+</body>
+</html>
