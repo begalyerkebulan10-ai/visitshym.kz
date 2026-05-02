@@ -1,0 +1,1734 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+<style>
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body{
+  margin:0;
+  padding:0;
+  background: #000; /* ақ сызықты жасырады */
+}
+    /* SLIDER */
+.slider{
+  position:relative;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+  z-index:0;
+}
+
+.slide{
+  position:absolute;
+  width:100%;
+  height:100%;
+  opacity:0;
+  transition:0.7s;
+  top:0;
+  left:0;
+}
+
+.slide.active{
+  opacity:1;
+}
+
+/* IMAGE */
+.slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transform: scale(1);
+  transition: transform 8s ease;
+}
+
+.slide.active img{
+  animation: zoomIn 8s ease forwards;
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.15);
+  }
+}
+.slide.active img{
+  animation: zoomIn 10s ease-in-out forwards;
+}
+
+@keyframes zoomIn {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1.2); }
+}
+
+.slide img{
+  transition: transform 0.5s ease;
+}
+/* OVERLAY */
+.overlay{
+  width:100%;
+  height:100%;
+  pointer-events: none;
+}
+
+/* CENTER */
+.center{
+  position:absolute;
+  top:40%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+   width: 90%;
+   z-index: 5;
+   color: #e2e8f0;
+}
+h1 {
+  font-size: clamp(18px, 4vw, 55px);
+}
+
+.info {
+  font-size: clamp(12px, 2.2vw, 18px);
+  line-height: 1.5;
+}
+
+.center h1{
+  font-size: clamp(20px, 4vw, 55px);
+  background: #0f172ac0;
+}
+
+/* AUDIO */
+.slide-audio{
+  margin-top:0px;
+  background:rgba(0, 0, 0, 0.192);
+  padding:15px;
+  border-radius:12px;
+  width:300px;
+  margin:auto;
+  position: relative;
+  z-index: 10;
+}
+
+.slide-audio p{
+  font-size:14px;
+  color:#cbd5e1;
+  margin-bottom:10px;
+}
+
+.slide-audio audio{
+  width:100%;
+
+}
+/* NAV BUTTONS */
+.nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:15px;
+  color:white;
+  background:rgba(0, 0, 0, 0.411);
+  padding:12px;
+  cursor:pointer;
+  border-radius:50%;
+  user-select:none;
+  z-index: 10;
+}
+
+.prev{ left:15px; }
+.next{ right:15px; }
+
+.nav:hover{
+  background:rgba(255, 255, 255, 0.425);
+}
+
+
+
+/* MODAL */
+.map-modal{
+  position:absolute;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.6);
+  z-index:99999;
+}
+
+.map-box{
+  width:80%;
+  height:70%;
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  position:relative;
+}
+
+#map{
+  width:100%;
+  height:100%;
+}
+
+.close{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:red;
+  color:white;
+  border:none;
+  padding:6px 10px;
+  cursor:pointer;
+  z-index:10;
+  border-radius:6px;
+}
+
+.circle-marker {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #fff;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+}
+
+.circle-marker img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.marker-text{
+    font-size:10px;
+    color:black;
+    background: #eee;
+    background-size: auto;
+}
+
+
+.map-modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.6);
+  z-index:9999;
+}
+
+
+.info{
+   font-size: clamp(12px, 2.2vw, 18px);
+  line-height: 1.5;
+  max-width: 400%;
+  min-width: 10%;
+  text-align: left;
+  background-color: #0f172ac0;
+  touch-action: pan-y;
+  overflow-y:auto;
+}
+.carta{
+  display:inline-block;
+  background:#0f172ac0;
+  border-radius:8px;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.carta:hover{
+  background:#dd1616;
+}
+
+/* басқанда (click кезінде) */
+.carta:active{
+  background:#f59e0b; /* 🔥 басылған кезде басқа түс */
+  transform: scale(0.95);
+}
+
+
+/* MENU */
+.menu{
+  position:fixed;
+  top:0;
+  left:-300px;
+  width:260px;
+  height:100%;
+  padding:20px;
+  transition:0.4s;
+  z-index:2000;
+  overflow-y:auto;
+      /* 🔥 animated gradient */
+  background: linear-gradient(-45deg, #1e90ff, #ffffff, #1e90ff);
+  background-size: 400% 400%;
+  animation: gradientMove 6s ease infinite;
+}
+/* 🔥 ANIMATION */
+@keyframes gradientMove{
+  0%{
+    background-position:0% 50%;
+  }
+  50%{
+    background-position:100% 50%;
+  }
+  100%{
+    background-position:0% 50%;
+  }
+}
+.menu.active{
+  left:0;
+}
+
+.close-btn1{
+  position:absolute;
+  top:15px;
+  right:15px;
+
+  width:42px;
+  height:42px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(10px);
+
+  color:#111;
+  font-size:18px;
+  font-weight:700;
+
+  cursor:pointer;
+
+  /* 🔥 ортада “floating” эффект */
+  transform:translateY(5px);
+
+  box-shadow:0 5px 20px rgba(0,0,0,0.2);
+  transition:0.3s;
+}
+
+.close-btn1:hover{
+  transform:scale(1.1);
+  background:white;
+}
+
+/* MENU ITEM */
+.item{
+  margin:10px 0;
+
+}
+
+.link-btn{
+  display:block;
+  padding:10px;
+  background:#0687ff;
+  color:rgb(255, 255, 255);
+  font-family:'Orbitron', sans-serif;
+  text-decoration:none;
+  border-radius:8px;
+  font-weight: 600;
+}
+.menu a.link-btn{
+  display:block;
+  padding:10px;
+  margin:6px 0;
+  background:#0687ff;
+  color:white;
+  text-decoration:none;
+  border-radius:8px;
+  transition:0.3s;
+  text-align:left;
+  font-weight:600;
+  font-family:'Orbitron', sans-serif;
+}
+
+.menu a.link-btn:hover{
+  background:#2563eb;
+  transform:scale(1.03);
+}
+/* SUBMENU */
+.title{
+  background:#2563eb;
+  color: white;
+  font-family:'Orbitron', sans-serif;
+  font-weight:600;
+  padding:10px;
+  border-radius:8px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+}
+.title:hover{
+  background:#2563eb;
+    transform:scale(1.03);
+}
+.arrow{
+  transition:0.3s;
+}
+
+.submenu{
+  max-height:0;
+  overflow:hidden;
+  transition:0.4s;
+  padding-left:10px;
+ background:rgba(0,0,0,0.2);
+}
+
+.item.open .submenu{
+  max-height:400px;
+}
+
+.item.open .arrow{
+  transform:rotate(90deg);
+}
+
+.submenu a{
+  display:block;
+  padding:8px;
+  color:#ffffff;
+  text-decoration:none;
+}
+.submenu a:hover{
+  background:#2563eb;
+  transform:scale(1.03);
+}
+
+/* TOP RIGHT */
+.top-right{
+  position:fixed;
+  display:flex;
+   top:15px;
+  right:15px;
+  gap:10px;
+  align-items:center;
+  z-index:3000;
+}
+
+/* BURGER */
+.burger{
+  font-size:28px;
+  cursor:pointer;
+  color: rgb(0, 0, 0);
+}
+/* LANG */
+.lang select{
+	background: #000000;
+    color:white;
+    padding:5px;
+    border-radius:6px;
+    font-size: 15px;
+}
+
+/* ITEM */
+.item{
+  margin:8px 0;
+}
+
+
+.arrow{
+  transition:0.3s;
+}
+
+.social-bar{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+
+  margin-top:1px;
+  padding:10px;
+  background: #99979754;
+  z-index: 1;
+}
+
+/* buttons */
+.s{
+  width:42px;
+  height:42px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  border-radius:50%;
+
+  color:white;
+  text-decoration:none;
+
+  transition:0.3s;
+  font-size:18px;
+}
+
+.s:hover{
+  transform:scale(1.2);
+}
+
+.wa:hover{ color:#25D366; box-shadow:0 0 10px #25D366; }
+.ig:hover{ color:#E1306C; box-shadow:0 0 10px #E1306C; }
+.fb:hover{ color:#1877F2; box-shadow:0 0 10px #1877F2; }
+.yt:hover{ color:#FF0000; box-shadow:0 0 10px #FF0000; }
+.call:hover{ color:#22c55e; box-shadow:0 0 10px #22c55e; }
+.tt:hover{ color:#ffffff; box-shadow:0 0 10px #ffffff; }
+
+/* погода */
+
+.weather-btn{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#0657d15e;
+  color:white;
+  margin-top:100%;
+  font-weight: 600;
+}
+.weather-btn:hover{
+  transform:scale(1.1);
+  background:rgb(0, 119, 255);
+}
+/* WEATHER */
+.backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(184, 184, 184, 0.904);
+  display:none;
+  z-index:3000;
+}
+
+.backdrop.active{display:block;}
+
+.sheet{
+  position:fixed;
+  left:0;
+  bottom:-100%;
+  width:100%;
+  height:30%;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(25px);
+  border-top-left-radius:25px;
+  border-top-right-radius:25px;
+  padding:15px;
+  transition:0.4s;
+  z-index:4000;
+}
+
+.sheet.active{bottom:0;}
+
+.handle{
+  width:50px;
+  height:5px;
+  background:rgba(255,255,255,0.3);
+  border-radius:10px;
+  margin:0 auto 10px;
+}
+
+.now{
+  margin:10px 0;
+  font-size:14px;
+  opacity:0.9;
+}
+
+.hours{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+}
+
+.hours::-webkit-scrollbar{display:none;}
+
+.hour{
+  min-width:70px;
+  text-align:center;
+  background:rgba(255,255,255,0.1);
+  border-radius:12px;
+  padding:8px;
+}
+
+.hour.active{
+  background:rgba(255,255,255,0.25);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .hero h1{font-size:38px;}
+}
+
+/* сагат */
+.clock-box{
+  margin-top:60px;
+  padding:12px;
+  border-radius:12px;
+  backdrop-filter:blur(10px);
+  text-align:center;
+  border:1px solid rgba(255, 255, 255, 0.021);
+}
+
+.clock{
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:2px;
+  color:#111;
+}
+
+.date{
+  font-size:12px;
+  opacity:0.7;
+  margin-top:4px;
+  color:#111;
+}
+/* BUTTON */
+.route-btn{
+  position:absolute;
+  bottom:10px;
+  left:10%;
+  transform:translateX(-50%);
+  background:#2563eb;
+  color:white;
+  padding:12px 20px;
+  border-radius:80px;
+  cursor:pointer;
+  z-index:0;
+}
+/* 📱 MOBILE FIX FULL */
+@media(max-width:768px){
+
+  .slider{
+    height:100dvh; /* 🔥 iPhone fix */
+  }
+
+  .center{
+    top:45%;
+    width:90%;
+    padding:10px;
+  }
+
+  .center h1{
+    font-size:20px !important;
+    padding:5px;
+  }
+
+  .info{
+    font-size:13px;
+    line-height:1.4;
+    max-height:150px;
+    overflow-y:auto; /* 🔥 текст scroll */
+  }
+
+  .slide-audio{
+    width:100%;
+    padding:10px;
+  }
+
+  .carta{
+    width:40%;
+    font-size:12px;
+  }
+
+  /* ❌ кнопка жасыру */
+  .nav{
+    display:none;
+  }
+
+  /* 🔥 overlay (оқылу үшін) */
+  .overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    background:rgba(0,0,0,0.4);
+    width:100%;
+    height:100%;
+  }
+
+  /* 🔥 route button fix */
+  .route-btn{
+    left:30%;
+    transform:translateX(-50%);
+    bottom:15px;
+    width:30%;
+    text-align:center;
+    font-size:14px;
+  }
+
+}
+.slider *{
+  touch-action: pan-y;
+}
+/* INNER FRAME */
+.frame{
+  position:absolute;
+  top:10px;
+  left:10px;
+  right:10px;
+  bottom:10px;
+  border:2px solid white;
+  border-radius:20px;
+  box-shadow: inset 0 0 25px rgba(255,255,255,0.3);
+  pointer-events:none;
+  z-index: 1;
+  max-width:100%;
+  overflow:hidden;
+}
+
+/* 📱 MOBILE ADAPTATION */
+@media (max-width:768px){
+  .frame{
+    top:5px;
+    left:5px;
+    right:5px;
+    bottom:5px;
+    border:2px solid white;
+    border-radius:15px;
+  }
+}
+
+@media (max-width:480px){
+  .frame{
+    top:3px;
+    left:3px;
+    right:3px;
+    bottom:3px;
+    border:1.5px solid white;
+    border-radius:12px;
+  }
+}
+/* BUTTONS */
+.detailBtn{
+  margin-top:15px;
+  padding:10px 15px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background: rgba(4, 61, 248, 0.637);;
+  color: rgb(255, 255, 255);
+}
+</style>
+</head>
+<body>
+<div class="frame"></div>
+<div class="top-right">
+
+  <div class="lang">
+    <select onchange="setLang(this.value)">
+      <option value="kz">KZ</option>
+      <option value="ru">RU</option>
+      <option value="en">EN</option>
+    </select>
+  </div>
+
+  <div class="burger" onclick="openMenu()">☰</div>
+</div>
+
+<!-- MENU -->
+<div class="menu" id="menu">
+
+  <div class="clock-box">
+    <div class="clock" id="clock">00:00:00</div>
+    <div class="date" id="date">loading...</div>
+  </div>
+
+  <div class="close-btn1" onclick="closeMenu()">
+  ✖️
+</div>
+
+  <div class="item">
+    <a class="link-btn" href="#" data-key="M1">Басты бет</a>
+  </div>
+
+  <div class="item">
+  <div class="title" data-key="M2" onclick="toggle(this.parentElement)">
+    Турлар жайлы <span class="arrow">▶️</span>
+  </div>
+
+  <div class="submenu">
+    <a href="page3.html" data-key="M21">ҚАЗІРГІ ШЫМКЕНТ</a>
+    <a href="page3.html" data-key="M22">ҚАЛАНЫҢ ӘІО</a>
+    <a href="page3.html" data-key="M23">ТАНЫМДЫҚ ТУР</a>
+    <a href="page3.html" data-key="M24">ТАРИХИ ҚАЛА</a>
+    <a href="page3.html" data-key="M25">ҚАЖЫЛЫҚ ҚАЛАСЫ</a>
+    <a href="page3.html" data-key="M26">ЕСКЕ АЛУ ЖӘНЕ МӘДЕНИЕТ БАҒЫТЫ</a>
+  </div>
+</div>
+
+  <div class="item">
+    <a class="link-btn" href="#" data-key="M3">Біз туралы</a>
+  </div>
+
+  <div class="item">
+    <a class="link-btn" href="#" data-key="M4">Байланыс</a>
+  </div>
+
+ <button class="weather-btn" onclick="openW()" data-key="Poroda">🌦️ Погода</button>
+ <div class="social-bar">
+	<a href="https://wa.me/77000000000" target="_blank" class="s wa">
+       <i class="fa-brands fa-whatsapp"></i></a>
+	<a href="https://instagram.com/visitshymkent" target="_blank" class="s ig">
+		<i class="fa-brands fa-instagram"></i></a>
+	<a href="https://facebook.com/visitshymkent" target="_blank" class="s fb">
+		<i class="fa-brands fa-facebook-f"></i></a>
+	<a href="https://youtube.com/@visitshymkent3910" target="_blank" class="s yt">
+		<i class="fa-brands fa-youtube"></i></a>
+	<a href="https://tiktok.com/@visitshymkent" target="_blank" class="s tt">
+		<i class="fa-brands fa-tiktok"></i></a>
+	<a href="tel:+77000000000" class="s call">
+		<i class="fa-solid fa-phone"></i></a>
+</div>
+
+</div>
+
+<!-- WEATHER -->
+<div class="backdrop" id="bg" onclick="closeW()"></div>
+
+<div class="sheet" id="sheet">
+
+  <div class="handle"></div>
+
+  <h3>📍 Шымкент</h3>
+
+  <div class="now" id="now">Жүктелуде...</div>
+
+  <div class="hours" id="hours"></div>
+
+</div>
+                
+<script>
+  let lang="kz";
+
+
+
+const texts = {
+  kz:{
+    M1:"Басты бет",
+    M2:"Турлар жайлы",
+    M21:"ҚАЗІРГІ ШЫМКЕНТ",
+    M22:"ҚАЛАНЫҢ ӘІО",
+    M23:"ТАНЫМДЫҚ ТУР",
+    M24:"ТАРИХИ ҚАЛА",
+    M25:"ҚАЖЫЛЫҚ ҚАЛАСЫ",
+    M26:"ЕСКЕ АЛУ ЖӘНЕ МӘДЕНИЕТ БАҒЫТЫ",
+    M3:"Біз туралы",
+    M4:"Байланыс",
+    T0:"ҚАЗІРГІ ШЫМКЕНТ",
+    T1:"«SHYM CITY» саябағы",
+    T2:"Шымкент қаласындағы 45 гектардан асатын ірі демалыс және көрікті орын. Ол қала тұрғындары мен қонақтарына серуендеуге, спортпен айналысуға және отбасымен демалуға арналған.",
+    T3:"Qyzgaldaq saraiy",
+    T4:"«Qyzgaldaq saraiy» — Шымкент қаласындағы заманауи көпфункциялы концерттік кешен. Ол халықаралық кездесулер, фестивальдер, симпозиумдар және ірі мәдени іс-шараларды өткізуге арналған.",
+    T5:"«Бәйдібек би» ескерткіші",
+    T6:"«Бәйдібек би» ескерткіші — Шымкент қаласындағы ең биік әрі маңызды тарихи нысандардың бірі. Ол қаланың солтүстік бөлігіндегі 220 метр биіктіктегі төбеге орнатылған.",
+    T7:"«Қазына» этно-тарихи кешені",
+    T8:"Шымкент қаласындағы ірі мәдени-танымдық орын, 2012 жылы ашылып, 75 гектар аумақты қамтиды. Ол жасыл желекке оранған кең аймақта орналасып, тарих пен заманауи демалысты біріктіреді.",
+    T9:"Қазақ хандығының 550 жылдығы монументі",
+    T10:"Қазақ хандығының 550 жылдығы монументі-2015 жылдың қазан айында 'Қазына'этно-тарихи кешенін құру шеңберінде ашылған 15 метрлік ескерткіш. Ол тарихи сабақтастықты бейнелейтін ұлттық ою-өрнектері мен рельефтері бар екі аркадан тұрады.",
+    T11:"Шымкенттің тарихи-өлкетану мұражайы",
+    T12:"Шымкенттің тарихи-өлкетану мұражайы 1920 жылы негізі қаланған және қаланың маңызды мәдени орталықтарының бірі болып табылады. 100 жылға жуық тарихы бар бұл мұражайдың басты мақсаты — келушілерді өңірдің табиғаты, тарихы мен мәдениетімен таныстыру.",
+    T13:"Әдет-ғұрып және салт-дәстүр орталығы",
+    T14:"Әдет-ғұрып және салт-дәстүр орталығы 2014 жылдың желтоқсан айында Республикамыз бойынша тұңғыш рет шырайлы Шымқаламызда ашылды. Бұл еліміздің өзге өңірлері мен облыстарында жоқ бірегей орталық.",
+    T15:"Наурыз алаңы",
+    T16:"Шымкентте қаланың шырайына шырай қосқан көрікті мекендердің қатары уақыт өткен сайын көбейіп келеді. Сондай сәулетті орындардың бірі – «Наурыз» алаңы. «Наурыз» алаңы 1 гектардан астам аумақты қамтиды.",
+    T17:"Жайлау көл",
+    T18:"«Жайлау көл» демалыс аймағында орналасқан «Shymkent Altyn Eye» — биіктігі 50 метр болатын алып айналмалы аттракцион. Ол 18 жабық кабинамен жабдықталып, бір мезетте 108 адамды қабылдай алады.",
+    T19:"Шымкент хайуанаттар бағы",
+    T20:"Шымкент хайуанаттар бағы — табиғатты жақыннан танып, сирек және экзотикалық жануарларды көруге мүмкіндік беретін ерекше орын. Ол тек демалыс аймағы емес, сонымен қатар экологиялық және білім беру орталығы.",
+    T21:"Асанбай Асқаров атындағы дендрологиялық саябақ",
+    T22:"Асанбай Асқаров атындағы дендрологиялық саябақ — Шымкенттің ең ірі әрі бірегей жасыл аймақтарының бірі. 1979 жылы бұрынғы қоқыс орнының орнына салынған бұл саябақ бүгінде 120 гектар аумақты алып жатыр.",
+    T23:"«Қасірет» мемориалды кешені",
+    T24:"«Қасірет» мемориалды кешені — саяси қуғын-сүргін құрбандарына арналған тарихи орын. Ол 1937–1938 жылдары көптеген адамдар атылған Албастысай аумағында орналасқан.",
+    marshut:"📍 Маршрут",
+    C1:"КАРТАДАН ҚАРАУ",
+    C2:"КАРТАДАН ҚАРАУ",
+    C3:"КАРТАДАН ҚАРАУ",
+    C4:"КАРТАДАН ҚАРАУ",
+    C5:"КАРТАДАН ҚАРАУ",
+    C6:"КАРТАДАН ҚАРАУ",
+    C7:"КАРТАДАН ҚАРАУ",
+    C8:"КАРТАДАН ҚАРАУ",
+    C9:"КАРТАДАН ҚАРАУ",
+    C10:"КАРТАДАН ҚАРАУ",
+    C11:"КАРТАДАН ҚАРАУ",
+    C12:"КАРТАДАН ҚАРАУ",
+    Poroda:"🌦️ Ауа райы",
+    Toligral1:"Толығырақ",
+    Toligral2:"Толығырақ",
+    Toligral3:"Толығырақ",
+    Toligral4:"Толығырақ",
+    Toligral5:"Толығырақ",
+    Toligral6:"Толығырақ",
+    Toligral7:"Толығырақ",
+    Toligral8:"Толығырақ",
+    Toligral9:"Толығырақ",
+    Toligral10:"Толығырақ",
+    Toligral11:"Толығырақ",
+    Toligral12:"Толығырақ",
+},
+  ru:{
+    M1:"Главная",
+    M2:"О турах",
+    M21:"СОВРЕМЕННЫЙ ШЫМКЕНТ",
+    M22:"ГОРОДСКОЙ АДО",
+    M23:"ПОЗНАВАТЕЛЬНЫЙ ТУР",
+    M24:"ИСТОРИЧЕСКИЙ ГОРОД",
+    M25:"СВЯЩЕННЫЙ ГОРОД",
+    M26:"ПАМЯТЬ И КУЛЬТУРА",
+    M3:"О нас",
+    M4:"Контакты",
+T0:"СОВРЕМЕННЫЙ ШЫМКЕНТ",
+T1:"Парк «SHYM CITY»",
+T2:"Крупная зона отдыха и достопримечательность в Шымкенте площадью более 45 гектаров. Предназначена для прогулок, занятий спортом и семейного отдыха жителей и гостей города.",
+T3:"Qyzgaldaq saraiy",
+T4:"«Qyzgaldaq saraiy» — современный многофункциональный концертный комплекс в Шымкенте. Предназначен для проведения международных встреч, фестивалей, симпозиумов и крупных культурных мероприятий.",
+T5:"Памятник Бәйдібек би",
+T6:"Памятник Бәйдібек би — один из самых высоких и значимых исторических объектов Шымкента. Установлен на холме высотой 220 метров в северной части города.",
+T7:"Этно-исторический комплекс «Қазына»",
+T8:"Крупный культурно-познавательный объект в Шымкенте, открытый в 2012 году и занимающий территорию 75 гектаров. Расположен в зелёной зоне и сочетает историю и современный отдых.",
+T9:"Монумент 550-летия Казахского ханства",
+T10:"Монумент 550-летия Казахского ханства — 15-метровый памятник, открытый в октябре 2015 года в рамках создания этно-исторического комплекса «Қазына». Состоит из двух арок с национальными орнаментами и рельефами.",
+T11:"Шымкентский историко-краеведческий музей",
+T12:"Шымкентский историко-краеведческий музей основан в 1920 году и является одним из важных культурных центров города. Его основная цель — знакомство посетителей с природой, историей и культурой региона.",
+T13:"Центр обычаев и традиций",
+T14:"Центр обычаев и традиций был открыт в декабре 2014 года в Шымкенте и стал первым подобным учреждением в стране. Это уникальный центр, не имеющий аналогов в других регионах.",
+T15:"Площадь Наурыз",
+T16:"В Шымкенте с каждым годом увеличивается количество красивых мест, украшающих город. Одним из таких является площадь «Наурыз», занимающая более 1 гектара.",
+T17:"Озеро Жайлау",
+T18:"В зоне отдыха «Жайлау көл» расположен аттракцион «Shymkent Altyn Eye» высотой 50 метров. Он оснащён 18 закрытыми кабинами и может одновременно принимать до 108 человек.",
+T19:"Шымкентский зоопарк",
+T20:"Шымкентский зоопарк — уникальное место, где можно познакомиться с природой и увидеть редких и экзотических животных. Это также экологический и образовательный центр.",
+T21:"Дендропарк имени Асанбая Аскарова",
+T22:"Дендропарк имени Асанбая Аскарова — один из крупнейших и уникальных зелёных парков Шымкента. Основан в 1979 году на месте бывшей свалки и занимает 120 гектаров.",
+T23:"Мемориальный комплекс «Қасірет»",
+T24:"Мемориальный комплекс «Қасірет» — историческое место, посвящённое жертвам политических репрессий. Расположен в районе Албастысай, где в 1937–1938 годах были расстреляны люди.",
+    
+marshut:"📍 Маршрут",
+
+C1:"СМОТРЕТЬ НА КАРТЕ",
+C2:"СМОТРЕТЬ НА КАРТЕ",
+C3:"СМОТРЕТЬ НА КАРТЕ",
+C4:"СМОТРЕТЬ НА КАРТЕ",
+C5:"СМОТРЕТЬ НА КАРТЕ",
+C6:"СМОТРЕТЬ НА КАРТЕ",
+C7:"СМОТРЕТЬ НА КАРТЕ",
+C8:"СМОТРЕТЬ НА КАРТЕ",
+C9:"СМОТРЕТЬ НА КАРТЕ",
+C10:"СМОТРЕТЬ НА КАРТЕ",
+C11:"СМОТРЕТЬ НА КАРТЕ",
+C12:"СМОТРЕТЬ НА КАРТЕ",
+Poroda:"🌦️Погода",
+Toligral1:"Подробнее",
+  Toligral2:"Подробнее",
+  Toligral3:"Подробнее",
+  Toligral4:"Подробнее",
+  Toligral5:"Подробнее",
+  Toligral6:"Подробнее",
+  Toligral7:"Подробнее",
+  Toligral8:"Подробнее",
+  Toligral9:"Подробнее",
+  Toligral10:"Подробнее",
+  Toligral11:"Подробнее",
+  Toligral12:"Подробнее",
+    },
+  en:{
+    M1:"Home",
+    M2:"About tours",
+    M21:"MODERN SHYMKENT",
+    M22:"CITY ADMINISTRATIVE CENTER",
+    M23:"EDUCATIONAL TOUR",
+    M24:"HISTORICAL CITY",
+    M25:"SACRED CITY",
+    M26:"MEMORY & CULTURE",
+    M3:"About us",
+    M4:"Contact",
+T0:"MODERN SHYMKENT",
+T1:"“SHYM CITY” Park",
+T2:"A large recreational and sightseeing area in Shymkent covering more than 45 hectares. Designed for walking, sports, and family recreation for residents and visitors.",
+T3:"Qyzgaldaq saraiy",
+T4:"“Qyzgaldaq saraiy” is a modern multifunctional concert complex in Shymkent. It is designed for international meetings, festivals, symposiums, and major cultural events.",
+T5:"Monument to Baidibek Bi",
+T6:"The Baidibek Bi monument is one of the tallest and most significant historical landmarks in Shymkent. It is located on a 220-meter-high hill in the northern part of the city.",
+T7:"“Kazyna” Ethno-Historical Complex",
+T8:"A major cultural and educational site in Shymkent, opened in 2012 and covering 75 hectares. It is located in a green area and combines history with modern recreation.",
+T9:"Monument of the 550th Anniversary of the Kazakh Khanate",
+T10:"The monument of the 550th anniversary of the Kazakh Khanate is a 15-meter structure opened in October 2015 as part of the “Kazyna” ethno-historical complex. It consists of two arches with national ornaments and reliefs.",
+T11:"Shymkent Regional History Museum",
+T12:"The Shymkent Regional History Museum was founded in 1920 and is one of the city's important cultural centers. Its main goal is to introduce visitors to the region’s nature, history, and culture.",
+T13:"Center of Customs and Traditions",
+T14:"The Center of Customs and Traditions was opened in December 2014 in Shymkent and became the first of its kind in the country. It is a unique center with no аналогues in other regions.",
+T15:"Nauryz Square",
+T16:"In Shymkent, the number of beautiful places enhancing the city's appearance is growing every year. One of them is Nauryz Square, covering more than 1 hectare.",
+T17:"Zhaylau Lake",
+T18:"In the Zhaylau recreation area, the “Shymkent Altyn Eye” attraction stands 50 meters tall. It has 18 enclosed cabins and can accommodate up to 108 people at once.",
+T19:"Shymkent Zoo",
+T20:"Shymkent Zoo is a unique place where visitors can explore nature and see rare and exotic animals. It is also an ecological and educational center.",
+T21:"Asanbai Askarov Dendrological Park",
+T22:"The Asanbai Askarov Dendrological Park is one of the largest and most unique green parks in Shymkent. Established in 1979 on a former landfill, it now covers 120 hectares.",
+T23:"“Kasiret” Memorial Complex",
+T24:"The “Kasiret” memorial complex is a historical site dedicated to victims of political repression. It is located in the Albastysay area where executions took place in 1937–1938.",
+marshut:"📍 Route",
+
+C1:"VIEW ON MAP",
+C2:"VIEW ON MAP",
+C3:"VIEW ON MAP",
+C4:"VIEW ON MAP",
+C5:"VIEW ON MAP",
+C6:"VIEW ON MAP",
+C7:"VIEW ON MAP",
+C8:"VIEW ON MAP",
+C9:"VIEW ON MAP",
+C10:"VIEW ON MAP",
+C11:"VIEW ON MAP",
+C12:"VIEW ON MAP",
+Poroda:"🌦️ Weather",
+Toligral1:"More details",
+  Toligral2:"More details",
+  Toligral3:"More details",
+  Toligral4:"More details",
+  Toligral5:"More details",
+  Toligral6:"More details",
+  Toligral7:"More details",
+  Toligral8:"More details",
+  Toligral9:"More details",
+  Toligral10:"More details",
+  Toligral11:"More details",
+  Toligral12:"More details",
+
+  }
+};
+
+</script>
+
+<!-- SLIDER -->
+<div class="slider">
+    <div class="slide active">
+    <img src="img/mesto.jpeg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size: 50px;" data-key="T0">ҚАЗІРГІ ШЫМКЕНТ</h1>
+
+
+    </div>
+  </div>
+
+  <div class="slide">
+    <img src="img/mesto1.jpg">
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size: 25px;" data-key="T1">«SHYM CITY» саябағы </h1>
+      <P class="info" data-key="T2">Шымкент қаласындағы 45 гектардан асатын ірі демалыс және көрікті орын. Ол қала тұрғындары мен қонақтарына серуендеуге, спортпен айналысуға және отбасымен демалуға арналған.</P>
+
+      <div class="slide-audio">
+        <p class="audioText"></p>
+        <audio controls></audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/geo/69.622853,42.394489" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C1">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('shymcity.html')" data-key="Toligral1">Толығырақ</button>
+    </div>
+  </div>
+
+  <div class="slide">
+    <img src="img/mesto2.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T3">Qyzgaldaq saraiy</h1>
+      <p class="info" data-key="T4">«Qyzgaldaq saraiy» — Шымкент қаласындағы заманауи көпфункциялы концерттік кешен. Ол халықаралық кездесулер, фестивальдер, симпозиумдар және ірі мәдени іс-шараларды өткізуге арналған. </p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/geo/69.622853,42.394489" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C2">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('shymcity.html')"data-key="Toligral2">Толығырақ</button>
+    </div>
+  </div>
+
+  <div class="slide">
+    <img src="img/mecto3.png">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T5">«Бәйдібек би» ескерткіші</h1>
+      <p class="info" data-key="T6">«Бәйдібек би» ескерткіші — Шымкент қаласындағы ең биік әрі маңызды тарихи нысандардың бірі. Ол қаланың солтүстік бөлігіндегі 220 метр биіктіктегі төбеге орнатылған. </p>
+
+      <div class="slide-audio">
+        <audio  controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/geo/69.622853,42.394489" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C3">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('shymcity.html')"data-key="Toligral3">Толығырақ</button>
+    </div>
+  </div>
+
+    <div class="slide">
+    <img src="img/mesto4.jpeg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;"data-key="T7">«Қазына» этно-тарихи кешені</h1>
+      <p class="info"data-key="T8">Шымкент қаласындағы ірі мәдени-танымдық орын, 2012 жылы ашылып, 75 гектар аумақты қамтиды. Ол жасыл желекке оранған кең аймақта орналасып, тарих пен заманауи демалысты біріктіреді.</p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/geo/69.622853,42.394489" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C4">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('shymcity.html')"data-key="Toligral4">Толығырақ</button>
+    </div>
+  </div>
+
+   <div class="slide">
+    <img src="img/mesto5.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T9">Қазақ хандығының 550 жылдығы монументі</h1>
+      <p class="info" data-key="T10">Қазақ хандығының 550 жылдығы монументі-2015 жылдың қазан айында "Қазына"этно-тарихи кешенін құру шеңберінде ашылған 15 метрлік ескерткіш. Ол тарихи сабақтастықты бейнелейтін ұлттық ою-өрнектері мен рельефтері бар екі аркадан тұрады.</p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/geo/69.622853,42.394489" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C5">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('shymcity.html')"data-key="Toligral5">Толығырақ</button>
+    </div>
+  </div>
+
+   <div class="slide">
+    <img src="img/mesto6.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T11">Шымкенттің тарихи-өлкетану мұражайы</h1>
+      <p class="info" data-key="T12">Шымкенттің тарихи-өлкетану мұражайы 1920 жылы негізі қаланған және қаланың маңызды мәдени орталықтарының бірі болып табылады. 100 жылға жуық тарихы бар бұл мұражайдың басты мақсаты — келушілерді өңірдің табиғаты, тарихы мен мәдениетімен таныстыру. </p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/geo/69.622853,42.394489" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C6">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('shymcity.html')"data-key="Toligral6">Толығырақ</button>
+    </div>
+  </div>
+   <div class="slide">
+    <img src="img/mesto7.jpeg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;"data-key="T13">Әдет-ғұрып және салт-дәстүр орталығы</h1>
+      <p class="info" data-key="T14">Әдет-ғұрып және салт-дәстүр орталығы 2014 жылдың желтоқсан айында Республикамыз бойынша тұңғыш рет шырайлы Шымқаламызда ашылды. Бұл еліміздің өзге өңірлері мен облыстарында жоқ бірегей орталық. </p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/geo/69.622853,42.394489" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C7">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('shymcity.html')" data-key="Toligral7">Толығырақ</button>
+    </div>
+  </div>
+
+     <div class="slide">
+    <img src="img/mesto8.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T15">Наурыз алаңы</h1>
+      <p class="info" data-key="T16">Шымкентте қаланың шырайына шырай қосқан көрікті мекендердің қатары уақыт өткен сайын көбейіп келеді. Сондай сәулетті орындардың бірі – «Наурыз» алаңы. «Наурыз» алаңы 1 гектардан астам аумақты қамтиды.</p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/geo/69.622853,42.394489" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C8">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('shymcity.html')" data-key="Toligral8">Толығырақ</button>
+    </div>
+  </div>
+
+     <div class="slide">
+    <img src="img/mesto9.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T17">Жайлау көл</h1>
+      <p class="info" data-key="T18">«Жайлау көл» демалыс аймағында орналасқан «Shymkent Altyn Eye» — биіктігі 50 метр болатын алып айналмалы аттракцион. Ол 18 жабық кабинамен жабдықталып, бір мезетте 108 адамды қабылдай алады.</p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/geo/69.622853,42.394489" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C9">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('shymcity.html')" data-key="Toligral9">Толығырақ</button>
+    </div>
+  </div>
+
+     <div class="slide">
+    <img src="img/mesto10.png">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T19">Шымкент хайуанаттар бағы</h1>
+      <p class="info" data-key="T20">Шымкент хайуанаттар бағы — табиғатты жақыннан танып, сирек және экзотикалық жануарларды көруге мүмкіндік беретін ерекше орын. Ол тек демалыс аймағы емес, сонымен қатар экологиялық және білім беру орталығы. </p>
+
+      <div class="slide-audio">
+        <audio controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/geo/69.622853,42.394489" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C10">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('shymcity.html')" data-key="Toligral10">Толығырақ</button>
+    </div>
+  </div>
+
+     <div class="slide">
+    <img src="img/mesto11.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T21">Асанбай Асқаров атындағы дендрологиялық саябақ</h1>
+      <p class="info" data-key="T22">Асанбай Асқаров атындағы дендрологиялық саябақ — Шымкенттің ең ірі әрі бірегей жасыл аймақтарының бірі. 1979 жылы бұрынғы қоқыс орнының орнына салынған бұл саябақ бүгінде 120 гектар аумақты алып жатыр.</p>
+
+      <div class="slide-audio">
+        <audio  controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/geo/69.622853,42.394489" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C11">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('shymcity.html')" data-key="Toligral11">Толығырақ</button>
+    </div>
+  </div>
+
+     <div class="slide">
+    <img src="img/mesto12.jpg">
+
+    <div class="overlay"></div>
+
+    <div class="center">
+      <h1 style="font-size:25px;" data-key="T23">«Қасірет» мемориалды кешені </h1>
+      <p class="info" data-key="T24">«Қасірет» мемориалды кешені — саяси қуғын-сүргін құрбандарына арналған тарихи орын. Ол 1937–1938 жылдары көптеген адамдар атылған Албастысай аумағында орналасқан.</p>
+
+      <div class="slide-audio">
+        <audio  controls>
+        </audio>
+      </div>
+      <div class="carta">
+      <a href="https://2gis.kz/geo/69.622853,42.394489" target="_blank" style="text-decoration: none; color: #ffffff;" data-key="C12">КАРТАДАН ҚАРАУ</a>
+      </div>
+      <button class="detailBtn" onclick="goDetail('shymcity.html')" data-key="Toligral12">Толығырақ</button>
+    </div>
+  </div>
+
+  <div class="nav prev" onclick="prevSlide()">❮</div>
+  <div class="nav next" onclick="nextSlide()">❯</div>	
+</div>
+<script>
+/* SLIDES */
+let slides=document.querySelectorAll(".slide");
+let index=0;
+let currentLang="kz";
+
+/* 🔥 AUDIO MAP (ең маңызды бөлік) */
+const audioMap = {
+  0:{
+    kz:"mp.mp3",
+    ru:"mp2.mp3",
+    en:"mp.mp3"
+  },
+  1:{
+    kz:"mp.mp3",
+    ru:"mp2.mp3",
+    en:"mp.mp3"
+  },
+  2:{
+    kz:"audio3-kz.mp3",
+    ru:"audio3-ru.mp3",
+    en:"audio3-en.mp3"
+  },
+  3:{
+  kz:"mp.mp3",
+  ru:"mp2.mp3",
+  en:"audio3-en.mp3"
+  },
+  4:{
+  kz:"mp.mp3",
+  ru:"mp2.mp3",
+  en:"audio3-en.mp3"
+  },
+  5:{
+  kz:"mp.mp3",
+  ru:"mp2.mp3",
+  en:"audio3-en.mp3"
+  },
+  6:{
+  kz:"mp.mp3",
+  ru:"mp2.mp3",
+  en:"audio3-en.mp3"
+  },
+  7:{
+  kz:"mp.mp3",
+  ru:"mp2.mp3",
+  en:"audio3-en.mp3"
+  },
+  8:{
+  kz:"mp.mp3",
+  ru:"mp2.mp3",
+  en:"audio3-en.mp3"
+  },
+  9:{
+  kz:"mp.mp3",
+  ru:"mp2.mp3",
+  en:"audio3-en.mp3"
+  },
+  10:{
+  kz:"mp.mp3",
+  ru:"mp2.mp3",
+  en:"audio3-en.mp3"
+  },
+  11:{
+  kz:"mp.mp3",
+  ru:"mp2.mp3",
+  en:"audio3-en.mp3"
+  },
+  12:{
+  kz:"mp.mp3",
+  ru:"mp2.mp3",
+  en:"audio3-en.mp3"
+  },
+};
+
+
+/* SLIDE */
+function showSlide(i){
+  slides.forEach(s => s.classList.remove("active"));
+  slides[i].classList.add("active");
+  updateAudio();
+}
+
+function nextSlide(){
+  index = (index + 1) % slides.length;
+  showSlide(index);
+}
+
+function prevSlide(){
+  index = (index - 1 + slides.length) % slides.length;
+  showSlide(index);
+}
+
+/* 🔥 AUDIO UPDATE */
+function updateAudio(){
+  let audio = slides[index].querySelector("audio");
+
+  if(audioMap[index]){
+    audio.src = audioMap[index][currentLang];
+    audio.load();
+  }
+}
+function setLang(lang){
+  botLang = lang;
+  currentLang = lang; // 🔥 МІНЕ ОСЫ ЖОҚ
+
+  document.querySelectorAll("[data-key]").forEach(el=>{
+    let key = el.getAttribute("data-key");
+
+    if(texts[lang][key]){
+      if(el.querySelector(".arrow")){
+        el.childNodes[0].nodeValue = texts[lang][key] + " ";
+      } else {
+        el.textContent = texts[lang][key];
+      }
+    }
+  });
+
+  // 🔥 АУДИОНЫ ЖАҢАРТУ
+  updateAudio();
+}
+/* 🔥 DETAIL PAGE */ 
+function goDetail(page){
+window.location.href = page; 
+} 
+</script>
+
+
+<div class="route-btn" onclick="openRoute()" data-key="marshut">📍 Маршрут</div>
+
+<div class="map-modal" id="mapModal">
+  <div class="map-box">
+    <button class="close" onclick="closeMap()">✖</button>
+    <div id="map"></div>
+  </div>
+</div>
+
+
+<script>
+let map;
+let isLoaded = false;
+
+function openRoute(){
+
+  document.getElementById("mapModal").style.display = "flex";
+
+  DG.then(function(){
+
+    if(!map){
+
+      map = DG.map('map', {
+        center: [42.399506, 69.621184],
+        zoom: 15
+      });
+
+      const points = [
+        {lat: 42.397876, lng: 69.623877, img: "https://avatars.mds.yandex.net/get-altay/15487932/2a0000019750e9c8468ecbf8fbb7a0e7b3c8/orig", text: "SHYM CITY"},
+        {lat: 42.394690, lng: 69.623442, img: "https://avatars.mds.yandex.net/get-altay/13203115/2a0000018eb8ebc822ec6d589b78c2dbdf9a/XXXL", text: "Qyzgaldaq saraiy"},
+        {lat: 42.387501, lng: 69.627769, img: "https://avatars.mds.yandex.net/i?id=51bae985c56770e970af64f120824ba6_l-4471740-images-thumbs&n=13", text: "Baidibek Bi"},
+        {lat: 42.384836, lng: 69.626479, img: "https://visit-shymkent.com/wp-content/uploads/2025/05/kazyna-complex3.jpeg", text: "Қазына"},
+        {lat: 42.384890, lng: 69.627966, img: "https://avatars.mds.yandex.net/get-altay/15395175/2a00000198c61a04f062e6f1b103de552157/orig", text: "Қазақ хандығы 550"},
+        {lat: 42.382783, lng: 69.626951, img: "https://e-history.kz/storage/tmp/resize/preview/1200_0_ec329aef1b8271f8dbc9a90916d5681e.jpg", text: "Мұражай"},
+        {lat: 42.382827, lng: 69.628025, img: "https://dalatimes.kz/wp-content/uploads/2021/08/WhatsApp-Image-2020-11-16-at-12.15.23-1024x682-1.jpeg", text: "Салт-дәстүр"},
+        {lat: 42.382319, lng: 69.628590, img: "https://sxodim.com/uploads/posts/2023/02/06/optimized/669c6286245d1e25e6eefe8e75f77b3a_1400x790-q-85.jpg", text: "Наурыз"},
+        {lat: 42.381693, lng: 69.628203, img: "https://dwc.kg/wp-content/uploads/2023/06/5ca5cd55d1294-748x574.jpg", text: "Жайлау көл"},
+        {lat: 42.376953, lng: 69.628102, img: "https://www.gov.kz/uploads/2025/6/9/23e13cc59fa492028de2f3249297a10c_original.1444556.png", text: "Зоопарк"},
+        {lat: 42.368648, lng: 69.622985, img: "https://sn.kz/cache/imagine/main_page_full/uploads/news/2019/06/04/5cf6581432143731731646.jpg", text: "Дендропарк"},
+        {lat: 42.366951, lng: 69.623459, img: "https://www.gov.kz/uploads/2020/11/2/29243449d1ec5a70f751535aac091ea8_original.115930.jpeg", text: "Қасірет"}
+      ];
+
+      let markers = [];
+      let markersList = [];
+
+      points.forEach(p => {
+
+        const icon = DG.divIcon({
+          html: `
+            <div class="marker-wrapper">
+              <div class="circle-marker" style="cursor:pointer;">
+                <img src="${p.img}">
+              </div>
+            </div>
+          `,
+          className: '',
+          iconSize: [60, 60]
+        });
+
+        const marker = DG.marker([p.lat, p.lng], { icon }).addTo(map);
+
+        // 🔥 CLICK → POPUP
+        marker.on('click', function () {
+          marker.bindPopup(`
+            <div style="text-align:center; max-width:200px;">
+              <img src="${p.img}" style="width:200px;height:140px;object-fit:cover;border-radius:10px;">
+              <b>${p.text}</b>
+            </div>
+          `).openPopup();
+        });
+
+        markers.push([p.lat, p.lng]);
+
+        markersList.push({ marker, img: p.img });
+      });
+
+      // 🔵 ROUTE LINE (1 рет қана)
+      const polyline = DG.polyline(markers, {
+        color: '#1e90ff',
+        weight: 6
+      }).addTo(map);
+
+function getDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const toRad = x => x * Math.PI / 180;
+
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) *
+    Math.cos(toRad(lat2)) *
+    Math.sin(dLon / 2) ** 2;
+
+  return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+// 📍 TEXT LABEL ҚОСУ
+for (let i = 0; i < markers.length - 1; i++) {
+  const [lat1, lng1] = markers[i];
+  const [lat2, lng2] = markers[i + 1];
+
+  let dist = getDistance(lat1, lng1, lat2, lng2);
+
+  // 📌 midpoint
+  let midLat = (lat1 + lat2) / 2;
+  let midLng = (lng1 + lng2) / 2;
+
+  // 🔥 TEXT ICON (метка емес, текст)
+  const textIcon = DG.divIcon({
+    html: `
+      <div style="
+        background:#070f25;
+        color:#22c55e;
+        padding:4px 4px;
+        border-radius:8px;
+        font-size:10px;
+        font-weight:600;
+        box-shadow:0 0 10px rgba(0,0,0,0.5);
+      ">
+        ${dist.toFixed(2)} км
+      </div>
+    `,
+    className: '',
+    iconSize: [80, 20]
+  });
+
+  DG.marker([midLat, midLng], { icon: textIcon }).addTo(map);
+}
+
+      // 🚶 ICON
+      const personIcon = DG.divIcon({
+        html: `
+          <div id="person" style="
+            width:30px;height:30px;
+            background:#2563eb;
+            border-radius:50%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
+          ">🚶</div>
+        `,
+        className: '',
+        iconSize: [30, 30]
+      });
+
+      let person = DG.marker(markers[0], { 
+  icon: personIcon,
+  zIndexOffset: 10000   // 🔥 ең үстіне шығарады
+}).addTo(map);
+
+      function getAngle(lat1, lng1, lat2, lng2) {
+        const toRad = x => x * Math.PI / 180;
+        const toDeg = x => x * 180 / Math.PI;
+
+        const dLng = toRad(lng2 - lng1);
+        const y = Math.sin(dLng) * Math.cos(toRad(lat2));
+        const x = Math.cos(toRad(lat1)) * Math.sin(toRad(lat2)) -
+                  Math.sin(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.cos(dLng);
+
+        return (toDeg(Math.atan2(y, x)) + 360) % 360;
+      }
+
+      let i = 0;
+      let step = 0;
+      let speed = 0.004;
+
+function animate() {
+
+  let [lat1, lng1] = markers[i];
+  let [lat2, lng2] = markers[i + 1];
+
+  step += speed;
+
+  if (step >= 1) {
+    step = 0;
+    i++;
+
+    // 🔥 END → қайта бастау
+    if (i >= markers.length - 1) {
+      i = 0;   // қайта 1-нүкте
+      step = 0;
+    }
+
+    requestAnimationFrame(animate);
+    return;
+  }
+
+  let lat = lat1 + (lat2 - lat1) * step;
+  let lng = lng1 + (lng2 - lng1) * step;
+
+  person.setLatLng([lat, lng]);
+
+  let angle = getAngle(lat1, lng1, lat2, lng2);
+
+  document.getElementById("person").style.transform =
+    `rotate(${angle + 180}deg)`;
+
+  requestAnimationFrame(animate);
+}
+      animate();
+
+      isLoaded = true;
+
+    } else {
+      setTimeout(()=>map.invalidateSize(),100);
+    }
+
+  });
+}
+
+function closeMap(){
+  document.getElementById("mapModal").style.display = "none";
+}
+
+</script>
+<script>// menu select
+window.addEventListener("scroll", function(){
+  let header = document.getElementById("header");
+
+  if(window.scrollY > 50){
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
+});
+
+// MENU OPEN
+function openMenu(){
+  document.getElementById("menu").classList.add("active");
+}
+
+// MENU CLOSE
+function closeMenu(){
+  document.getElementById("menu").classList.remove("active");
+}
+
+// SUBMENU TOGGLE
+function toggle(el){
+  el.classList.toggle("open");
+}
+let interval;
+
+function openW(){
+  document.getElementById("sheet").classList.add("active");
+  document.getElementById("bg").classList.add("active");
+  loadWeather();
+  clearInterval(interval);
+  interval = setInterval(loadWeather,600000);
+}
+
+function closeW(){
+  document.getElementById("sheet").classList.remove("active");
+  document.getElementById("bg").classList.remove("active");
+}
+
+function getHour(){
+  return new Date().getHours();
+}
+
+async function loadWeather(){
+
+  const url="https://api.open-meteo.com/v1/forecast?latitude=42.32&longitude=69.59&hourly=temperature_2m&current_weather=true&forecast_days=1";
+
+  const res=await fetch(url);
+  const data=await res.json();
+
+  const temps=data.hourly.temperature_2m.slice(0,24);
+  const current=data.current_weather.temperature;
+  const code=data.current_weather.weathercode;
+
+  let icon="🌤️",text="Ауа райы";
+
+  if(code===0){icon="☀️";text="Ашық";}
+  else if(code<=3){icon="☁️";text="Бұлтты";}
+  else if(code<=67){icon="🌧️";text="Жаңбыр";}
+
+  document.getElementById("now").innerText=
+  icon+" Қазір: "+current+"°C • "+text;
+
+  const box=document.getElementById("hours");
+  box.innerHTML="";
+
+  let now=getHour();
+
+  temps.forEach((t,i)=>{
+    box.innerHTML+=`
+      <div class="hour ${i===now?'active':''}">
+        <div>${i}:00</div>
+        <div>🌡️</div>
+        <div>${Math.round(t)}°</div>
+      </div>
+    `;
+  });
+
+}
+//sagat obnova
+function updateClock(){
+  const now = new Date();
+
+  let h = String(now.getHours()).padStart(2,'0');
+  let m = String(now.getMinutes()).padStart(2,'0');
+  let s = String(now.getSeconds()).padStart(2,'0');
+
+  document.getElementById("clock").innerText = `${h}:${m}:${s}`;
+
+  let options = { year:'numeric', month:'long', day:'numeric' };
+  document.getElementById("date").innerText =
+    now.toLocaleDateString('kk-KZ', options);
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+<script>
+    let startX = 0;
+let endX = 0;
+
+const slider = document.querySelector(".slider");
+
+slider.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+}, { passive:true });
+
+slider.addEventListener("touchmove", e => {
+  endX = e.touches[0].clientX;
+  e.preventDefault(); // 🔥 scroll-ды тоқтатады
+}, { passive:false });
+
+slider.addEventListener("touchend", () => {
+  let diff = startX - endX;
+
+  if(Math.abs(diff) > 40){
+    if(diff > 0){
+      nextSlide();
+    } else {
+      prevSlide();
+    }
+  }
+});
+</script>
+</body>
+</html>
